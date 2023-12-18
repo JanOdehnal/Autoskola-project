@@ -162,18 +162,28 @@
 
 <div id="add_side" style="visibility: visible;">
     <h1>Add side</h1>
-        <form method="post">
-            <input type="hidden" id="add_side" name="add_side" value="add_side">
-            <label for="town">Town name:</label>
-            <input type="text" id="town" name="town">
-            <br>
-            <label for="street">Street name:</label>
-            <input type="text" id="street" name="street">
-            <br>
-            <label for="jps">Jps coodinates:</label>
-            <input type="text" id="jps" name="jps">
-            <br>
-            <label for="info">More info:</label>
-            <input type="text" id="info" name="info">
-        </form>
+    <form method="post">
+        <input type="hidden" id="add_side" name="add_side" value="add_side">
+        <label for="town">Town name:</label>
+        <input type="text" id="town" name="town">
+        <br>
+        <label for="street">Street name:</label>
+        <input type="text" id="street" name="street">
+        <br>
+        <label for="jps">Jps coodinates:</label>
+        <input type="text" id="jps" name="jps">
+        <br>
+        <label for="info">More info:</label>
+        <input type="text" id="info" name="info">
+        <br>
+        <input type="submit" value="Send">
+    </form>
+</div>
+
+<div id="modify_side">
+    <h1>Modify side</h1>
+    <form action="pokus.php" method="post">
+        <input type="submit" value="send">
+    </form>
+
 </div>

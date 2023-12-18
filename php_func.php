@@ -99,7 +99,7 @@
                         //echo "<script>console.log('".$possicion.", ".$_POST["email_s"]."')</script>";
 
                         data_to_db($con, "UPDATE student SET verify_student = '" .$number. "' where email = '" .$_POST["email_s"]. "'");
-                        //echo ("<script>add_values('student', '" .$_POST["email_s"]. "')</script>");//nefunguje !!!!!!!!!!!!!!
+                        echo ("<script>add_values('student', '" .$_POST["email_s"]. "')</script>");//nefunguje !!!!!!!!!!!!!!
                     }
                     else
                     {
@@ -176,7 +176,6 @@
             }
             if ($id_ != null) data_to_db($con, "DELETE FROM course WHERE id=".$id_);
         }
-        //domyslet predelat
         else if ($_POST["verify_password"] == "verify_password") //verify password
         {
             if ($_POST["pos"] == "student") $query = "select email, verify_student from student";
@@ -199,6 +198,10 @@
                 }
                 $stmt->close();
             }
+        }
+        else if ($_POST["add_side"] == "add_side")
+        {
+            data_to_db($con, "insert into sides(town, street, GPS_coordinate, more_info) values ('" .$_POST["town"]. "', '" .$_POST["street"]."', '".$_POST["jps"]."', '".$_POST["info"]."')");
         }
     }
 
