@@ -119,7 +119,7 @@
 </div>
 
 
-<div>
+<div id="add_veh" style="visibility: visible;">
     <h1>Add vehicle</h1>
     <form method="post">
         <input type="hidden" id="add_veh" name="add_veh" value="add_veh">
@@ -134,13 +134,25 @@
 </div>
 
 
-<div>
+<div id="del_veh" style="visibility: visible;">
     <h1>Delete vehicle</h1>
     <form method="post">
         <input type="hidden" id="del_veh" name="del_veh" value="del_veh">
-        <label for="veh_name_del">*Vehicle name:</label>
-        <input id="veh_name_del" type="text" name="veh_name_del" required/>
-        <br>
+        <label for="del_vehicle">Delete vehicle: </label>
+        <select name="del_vehicle" id="del_vehicle" require>
+        
+<?php
+    $query = "select id, vehicle_type from course";
+    if ($stmt = $con->prepare($query)) {
+        $stmt->execute();
+        $stmt->bind_result($id, $vehicle);
+        while ($stmt->fetch()) {
+            echo '<option value="' . $id . '">' .$vehicle. '</option>';
+        }
+        $stmt->close();
+    }
+?>
+        </select><br>
         <input type="submit" value="Delete vehicle">
     </form>
 </div>
@@ -180,10 +192,31 @@
     </form>
 </div>
 
-<div id="modify_side">
-    <h1>Modify side</h1>
-    <form action="pokus.php" method="post">
-        <input type="submit" value="send">
-    </form>
 
+<div id="del_side" style="visibility: visible;">
+    <h1>Delete side</h1>
+    <form method="post">
+        <input type="hidden" id="del_s" name="del_s" value="del_s">
+        <label for="mod_side">Delete side: </label>
+        <select name="mod_side" id="mod_side" require>       
+<?php
+    $query = "select id, town, street, GPS_coordinate, more_info from sides";
+    if ($stmt = $con->prepare($query)) {
+        $stmt->execute();
+        $stmt->bind_result($id, $town, $street, $GPS_coordinate, $more_info);
+        while ($stmt->fetch()) {
+            echo '<option value="' . $id . '">' .$town. ', ' .$street. ', ' .$GPS_coordinate. ', ' .$more_info. '</option>';
+        }
+        $stmt->close();
+    }
+?>
+        </select>
+        <br>
+        <input type="submit" value="Delete side">
+    </form>
+</div>
+
+
+<div>
+    <h1>Engage lesson</h1>
 </div>

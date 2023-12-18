@@ -22,7 +22,7 @@
     {
         if (mysqli_query($con, $sql))
         {
-            echo '<script>alert("New record proccesed successfully.'.$sql.'")</script>';
+            //echo '<script>alert("New record proccesed successfully.'.$sql.'")</script>';
         }
         else echo '<script>alert("Error: ' .$sql. '\n' . mysqli_error($con). '")</script>';
     }
@@ -97,14 +97,13 @@
                     if ($tmp)
                     {
                         //echo "<script>console.log('".$possicion.", ".$_POST["email_s"]."')</script>";
-
                         data_to_db($con, "UPDATE student SET verify_student = '" .$number. "' where email = '" .$_POST["email_s"]. "'");
                         echo ("<script>add_values('student', '" .$_POST["email_s"]. "')</script>");//nefunguje !!!!!!!!!!!!!!
                     }
                     else
                     {
                         data_to_db($con, "UPDATE lector SET verify_lector = '" .$number. "' where email = '" .$_POST["email_s"]. "'");
-                        //echo ("<script>add_values('" .$pos. "', '" .$_POST["email_s"]. "')</script>");
+                        echo ("<script>add_values('" .$pos. "', '" .$_POST["email_s"]. "')</script>");
                     }
                     //email($_POST["email_l"], "werify passvord", "We are sending you a verifycation password: " .$number. ".");
                 }
@@ -158,23 +157,7 @@
         }
         else if ($_POST["del_veh"] == "del_veh") //delete vehicle
         {
-            $query = "select id, vehicle_type from course";
-            $id_=null;
-            if ($stmt = $con->prepare($query))
-            {
-                $stmt->execute();
-                $stmt->bind_result($id, $vehicle_type);
-                while ($stmt->fetch())
-                {    
-                    if ($_POST["veh_name_del"] == $vehicle_type) 
-                    {
-                        $id_=$id;
-                        break;
-                    }
-                }
-                $stmt->close();
-            }
-            if ($id_ != null) data_to_db($con, "DELETE FROM course WHERE id=".$id_);
+            data_to_db($con, "DELETE FROM course WHERE id=".$_POST["del_vehicle"]);
         }
         else if ($_POST["verify_password"] == "verify_password") //verify password
         {
@@ -202,6 +185,10 @@
         else if ($_POST["add_side"] == "add_side")
         {
             data_to_db($con, "insert into sides(town, street, GPS_coordinate, more_info) values ('" .$_POST["town"]. "', '" .$_POST["street"]."', '".$_POST["jps"]."', '".$_POST["info"]."')");
+        }
+        else if ($_POST["del_s"] == "del_s")
+        {
+            data_to_db($con, "DELETE FROM sides WHERE id=".$_POST["mod_side"]);
         }
     }
 

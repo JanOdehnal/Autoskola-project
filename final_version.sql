@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS drive_sch_db.sides (
   id INT NOT NULL AUTO_INCREMENT,
   town VARCHAR(45) NULL,
   street VARCHAR(45) NULL,
-  GPS_coordinate VARCHAR(45) NULL,
+  GPS_coordinate VARCHAR(45) NULL UNIQUE,
   more_info VARCHAR(45) NULL,
   PRIMARY KEY (id))
 ENGINE = InnoDB;
