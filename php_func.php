@@ -22,7 +22,7 @@
     {
         if (mysqli_query($con, $sql))
         {
-            //echo '<script>alert("New record proccesed successfully.'.$sql.'")</script>';
+            echo '<script>alert("New record proccesed successfully.'.$sql.'")</script>';
         }
         else echo '<script>alert("Error: ' .$sql. '\n' . mysqli_error($con). '")</script>';
     }
@@ -98,7 +98,7 @@
                     {
                         //echo "<script>console.log('".$possicion.", ".$_POST["email_s"]."')</script>";
                         data_to_db($con, "UPDATE student SET verify_student = '" .$number. "' where email = '" .$_POST["email_s"]. "'");
-                        echo ("<script>add_values('student', '" .$_POST["email_s"]. "')</script>");//nefunguje !!!!!!!!!!!!!!
+                        echo ("<script>window.onload(add_values('student', '" .$_POST["email_s"]. "'))</script>");//nefunguje !!!!!!!!!!!!!!
                     }
                     else
                     {
@@ -109,7 +109,7 @@
                 }
                 else echo "<script>alert('Wrong email!')</script>";
                 echo "<script>console.log('konec')</script>";
-
+                //$_SESSION
             }   
         }
         else if ($_POST["log_in"] == "log_in") //log in
@@ -146,6 +146,7 @@
                     {
                         if ($tmp) data_to_db($con, "UPDATE student SET password = '" .$_POST["password_l"]. "' where email = '" .$_POST["email_l"]. "'");
                         else data_to_db($con, "UPDATE lector SET password = '" .$_POST["password_l"]. "' where email = '" .$_POST["email_l"]. "'");
+                        //$_SESSION
                     }
                     else echo "<script>alert('Wrong email!')</script>";
                 }    

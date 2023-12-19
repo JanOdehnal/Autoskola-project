@@ -16,9 +16,9 @@ function change_visibility(id, vis = null)
 
 function add_values(possicion, email)
 {
-    console.log('proslo!!!!!!'+possicion+" "+ email+"and");
+    //console.log('proslo!!!!!!'+possicion+" "+ email+"and");
 
-    onLoad(change_visibility("verify_pass"));
+    change_visibility("verify_pass");
     document.getElementById("pos").value = possicion;
     document.getElementById("pers_em").value = email;
 }
