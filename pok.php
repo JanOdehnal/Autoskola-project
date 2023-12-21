@@ -1,4 +1,3 @@
-<script src="javascript.js"></script>
 <?php include 'php_func.php';?>
 
 
@@ -86,9 +85,10 @@
         <label for="password_s">*Password:</label>
         <input id="password_s" type="password" name="password_s" required/>
         <br>
-        <button onclick="change_visibility('sign'), change_visibility('log_sign')">Back</button>
         <input type="submit" value="Sign in" >
+        <!--<button onclick="not_in_php()"></button>-->
     </form>
+    <button onclick="change_visibility('sign'), change_visibility('log_sign')">Back</button>
 </div>
 
 
@@ -113,9 +113,10 @@
         <label for="password_ver">*Werication password:</label>
         <input id="password_ver" type="password" name="password_ver" required/>
         <br>
-        <button onclick="change_visibility('log'), change_visibility('log_sign')">Back</button>
+        
         <input type="submit" value="Log in">
     </form>
+    <button onclick="change_visibility('log'), change_visibility('log_sign')">Back</button>
 </div>
 
 
@@ -158,12 +159,12 @@
 </div>
 
 
-<div id="verify_pass" style="visibility: visible;">
+<div id="verify_pass" style="visibility: hidden;">
     <h1>Verify password</h1>
     <form method="post">
         <input type="hidden" id="verify_password" name="verify_password" value="verify_password">
-        <input type="hidden" id="pos" name="pos" value="lector">
-        <input type="hidden" id="person_em" name="person_em" value="jan@pako">
+        <input type="hidden" id="pos" name="pos" value="">
+        <input type="hidden" id="person_em" name="person_em" value="">
         <label for="ver_pass">*Werifycation password:</label>
         <input id="ver_pass" type="password" name="ver_pass" required/>
         <br>

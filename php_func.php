@@ -30,7 +30,7 @@
     //processing data
     if ($_POST)
     {    
-        if ($_POST["add_person"] == "add_person")
+        if (isset($_POST["add_person"])  && $_POST["add_person"] != "add_person")
         { 
             if ($_POST["posicion"] == "student") // add person
             {
@@ -98,12 +98,14 @@
                     {
                         //echo "<script>console.log('".$possicion.", ".$_POST["email_s"]."')</script>";
                         data_to_db($con, "UPDATE student SET verify_student = '" .$number. "' where email = '" .$_POST["email_s"]. "'");
-                        echo ("<script>window.onload(add_values('student', '" .$_POST["email_s"]. "'))</script>");//nefunguje !!!!!!!!!!!!!!
+                        echo ("<script>window.onload = function(){add_values('student', '" .$_POST["email_s"]. "');}</script>");//nefunguje !!!!!!!!!!!!!!
                     }
                     else
                     {
                         data_to_db($con, "UPDATE lector SET verify_lector = '" .$number. "' where email = '" .$_POST["email_s"]. "'");
-                        echo ("<script>add_values('" .$pos. "', '" .$_POST["email_s"]. "')</script>");
+                        echo ("<script>window.onload = function(){add_values('" .$pos. "', '" .$_POST["email_s"]. "');}</script>");//nefunguje !!!!!!!!!!!!!!
+
+                        //echo ("<script>add_values('" .$pos. "', '" .$_POST["email_s"]. "')</script>");
                     }
                     //email($_POST["email_l"], "werify passvord", "We are sending you a verifycation password: " .$number. ".");
                 }
