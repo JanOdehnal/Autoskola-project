@@ -1,4 +1,4 @@
-<?php include 'php_func.php';?>
+<?php include 'connect_mysql.php';?>
 
 
 
@@ -112,8 +112,7 @@
         <br>
         <label for="password_ver">*Werication password:</label>
         <input id="password_ver" type="password" name="password_ver" required/>
-        <br>
-        
+        <br>        
         <input type="submit" value="Log in">
     </form>
     <button onclick="change_visibility('log'), change_visibility('log_sign')">Back</button>
