@@ -22,3 +22,13 @@ function add_values(possicion, email)
     document.getElementById("person_em").value = email;
 }
 
+function inicial(possicion, email)
+{
+    alert("ok");
+    console.log('provedlo'+possicion+" "+ email);
+    //document.getElementById("pokus").value=email;
+    document.getElementById("pokus").innerHTML=email;
+    print("ok");
+    document.write("ok");
+    
+}

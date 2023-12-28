@@ -56,6 +56,13 @@
 
 </div>
 
+<?php
+
+echo $_COOKIE[$cookie_value];
+
+
+
+?>
 
 </body>
 </html>

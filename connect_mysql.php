@@ -99,7 +99,7 @@
                     else
                     {
                         data_to_db($con, "UPDATE lector SET verify_lector = '" .$number. "' where email = '" .$_POST["email_s"]. "'");
-                        echo ("<script>window.onload = function(){add_values('" .$pos. "', '" .$_POST["email_s"]. "');}</script>");//nefunguje !!!!!!!!!!!!!!                        
+                        echo ("<script>window.onload = function(){add_values('" .$pos. "', '" .$_POST["email_s"]. "');}</script>");                     
                     }
                     //email($_POST["email_l"], "werify passvord", "We are sending you a verifycation password: " .$number. ".");
                 }
@@ -183,9 +183,23 @@
                         if ($_POST["ver_pass"] == $password)
                         {
                             echo "<script>alert('You are sign in!')</script>";
-                            if ($_POST["pos"] == "student") header("Location:http://localhost//Honza/autoskola_priprava/student.php");
+                            if ($_POST["pos"] == "student")
+                            {
+
+                                //echo ("<script>window.onload = function(){inicial('" .$_POST["pos"]. "', '" .$_POST["person_em"]. "');}</script>");//nefunguje !!!!!!!!!!!!!!
+                                //echo "<script>alert('stp')</script>"; 
+                                //session_start();                 
+                                //$_SESSION["pokus"]=$_POST["person_em"];
+                                //$cookie_name = "studet";
+                                //$cookie_value = $email;
+                                //setcookie($cookie_name, $cookie_value, time() + 3600, "/"); // 86400 = 1 day
+
+                                header("Location:http://localhost//Honza/autoskola_priprava/student.php", );
+
+                            }
                             else if ($_POST["person_em"] == "lector") header("Location:http://localhost//Honza/autoskola_priprava/lector.php");
                             else header("Location:http://localhost//Honza/autoskola_priprava/admin.php");
+                            
                         }
                         else echo "<script>alert('Wrong verifycation password!')</script>";
                     }
