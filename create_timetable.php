@@ -178,7 +178,6 @@ if ($_POST)
 {    
     if (isset($_POST["time_t_weeks"]))
     { 
-
         $my_timetable->set_weeks($_POST["time_t_weeks"]);
 
     }

@@ -16,5 +16,6 @@ UPDATE student SET password = "1234" where email = 'adam@deb';
 UPDATE lector SET verify_lector = "1234" where email = 'jan@pako';
 UPDATE student SET verify_student = "1234" where email = 'ode2@seznam.cz';
 desc student;
+insert into student(name, surename, emeil, verify_student, phone_number) values ('A', 'Pok', 'a@pok', '132', '420000111111');
 
 delete from course where id = 3;
