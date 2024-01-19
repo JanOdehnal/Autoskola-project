@@ -101,7 +101,6 @@ if (isset($_POST["email_l"]))
     {
         $sql = "SELECT * from lector where email = '".$_POST["email_l"]."'";
         $sql_row = mysqli_query($con, $sql);
-        $row = mysqli_fetch_assoc($sql_row);
         if ($row = mysqli_fetch_assoc($sql_row))
         {
             if($row["password"] != null)
@@ -117,7 +116,7 @@ if (isset($_POST["email_l"]))
             }
             else
             {
-                echo "<script>document.getElementById('logs').innerHTML = 'You write incorrect veryfication passwor!'</script>";
+                echo "<script>document.getElementById('logs').innerHTML = 'You write incorrect veryfication password!'</script>";
             }
         }
         else

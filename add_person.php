@@ -1,17 +1,7 @@
-<?php include 'connect_mysql.php';?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+<html>
     <div id="add_person_form">
         <h1>Add new person</h1>
-        <form method="POST"><!--who is it-->
-            <input type="hidden" id="add_person" name="add_person" value="add_person">
+        <form method="POST">
             *Choode who it is:<br>
             <input type="radio" id="student" name="posicion" value="student" onclick="change_visibility('if_student', true)" required>
             <label for="student">Student</label>
@@ -34,7 +24,7 @@
             <br/>
             *In what vehicle will student drive? / Lector prefer:<br>
     <?php
-        $query = "select id, vehicle_type, num_of_less from course";
+        $query = "SELECT id, vehicle_type, num_of_less from course";
         if ($stmt = $con->prepare($query)) {
             $stmt->execute();
             $stmt->bind_result($id, $vehicle, $lesson_num);
@@ -51,7 +41,7 @@
                 <select name="choose_lec" id="choose_lec">
     <?php
         
-        $query = "select id, name, surname, email from lector";
+        $query = "SELECT id, name, surname, email from lector";
         if ($stmt = $con->prepare($query)) {
             $stmt->execute();
             $stmt->bind_result($id, $name, $surname, $email);
@@ -66,45 +56,37 @@
             <input type="submit" value="Registry person">
         </form>
     </div>
-
-
-    <div id="add_veh" style="visibility: visible;">
-        <h1>Add vehicle</h1>
-        <form method="post">
-            <input type="hidden" id="add_veh" name="add_veh" value="add_veh">
-            <label for="veh_name">*Vehicle name:</label>
-            <input id="veh_name" type="text" name="veh_name" required/>
-            <br>
-            <label for="num_less">*Number of compursory lessons:</label>
-            <input id="num_less" type="number" name="num_less" min="0" required>
-            <br>
-            <input type="submit" value="Add vehicle">
-        </form>
-    </div>
-
-    <div id="del_veh" style="visibility: visible;">
-        <h1>Delete vehicle</h1>
-        <form method="post">
-            <input type="hidden" id="del_veh" name="del_veh" value="del_veh">
-            <label for="del_vehicle">Delete vehicle: </label>
-            <select name="del_vehicle" id="del_vehicle" require>
-            
-    <?php
-        $query = "select id, vehicle_type from course";
-        if ($stmt = $con->prepare($query)) {
-            $stmt->execute();
-            $stmt->bind_result($id, $vehicle);
-            while ($stmt->fetch()) {
-                echo '<option value="' . $id . '">' .$vehicle. '</option>';
-            }
-            $stmt->close();
-        }
-    ?>
-            </select><br>
-            <input type="submit" value="Delete vehicle">
-        </form>
-    </div>
-
-
-</body>
 </html>
+
+<?php
+if (isset($_POST["posicion"]))
+{ 
+    if ($_POST["posicion"] == "student") // add person
+    {
+        // add record to student_course_lec
+        if ($_POST["type_veh"] == null) echo "<script>document.getElementById('logs').innerHTML = 'You forgot write vehicle type!'</script>";
+        else if ($_POST["choose_lec"] == null) echo "<script>document.getElementById('logs').innerHTML = 'You forgot choose lector!'</script>";
+        else 
+        {
+            data_to_db($con, "insert into student(name, surname, email, phone_number, verify_strudent) values('" .$_POST["name"]. "','" .$_POST["surname"]. "','" .$_POST["email"]. "','" .$_POST["phone_number"]. "', '" .rand(100000, 999999). ")");
+
+            data_to_db($con, "insert into student_course_lec(student_id, course_id, lector_id) values('" .$con->insert_id. "','" .$_POST["type_veh"]. "','" .$_POST["choose_lec"]. "')");
+        }
+    }
+    else if ($_POST["posicion"] == "lector") data_to_db($con, "insert into lector(name, surname, email, phone_number, prefer_veh, possicion, verify_lector) values('" .$_POST["name"]. "', '" .$_POST["surname"]. "','" .$_POST["email"]. "','" .$_POST["phone_number"]. "','" .$_POST["type_veh"]. "','lector', " .rand(100000, 999999). ")");
+    else if ($_POST["posicion"] == "admin") data_to_db($con, "insert into lector(name, surname, email, phone_number, prefer_veh, possicion, verify_lector) values('" .$_POST["name"]. "', '" .$_POST["surname"]. "','" .$_POST["email"]. "','" .$_POST["phone_number"]. "','" .$_POST["type_veh"]. "','admin', " .rand(100000, 999999). ")");
+    //mail("ode2@seznam.cz", "You were log in in driving school", "You were log in in driving school. Your verifycation code is: " .rand(100000, 999999). ".");
+    // last if delte if
+    //send email with verificational password // current net working
+}
+
+
+
+
+
+
+
+
+
+
+?>

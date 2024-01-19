@@ -16,6 +16,6 @@ UPDATE student SET password = "1234" where email = 'adam@deb';
 UPDATE lector SET verify_lector = "1234" where email = 'jan@pako';
 UPDATE student SET verify_student = "1234" where email = 'ode2@seznam.cz';
 desc student;
-insert into student(name, surename, emeil, verify_student, phone_number) values ('A', 'Pok', 'a@pok', '132', '420000111111');
-
+insert into lector(name, surname, email, verify_lector, phone_number, possicion, prefer_veh) values ('Jirka', 'Šunka', 'jirka@sunka', '132', '420000111222', 'admin', '2');
+use drive_sch_db;
 delete from course where id = 3;

@@ -28,13 +28,15 @@ if (isset($_SESSION["info"]))
         {
             echo "<script>document.getElementById('hello').innerHTML = 'Hello lector ".$_SESSION["info"]["name"]." ".$_SESSION["info"]["surname"]."!'</script>";
             require_once "add_side.php";
-            require_once "del_side.php";
+            require_once "delete_side.php";
         }
         else
         {
             echo "<script>document.getElementById('hello').innerHTML = 'Hello admin ".$_SESSION["info"]["name"]." ".$_SESSION["info"]["surname"]."!'</script>";
             require_once "add_side.php";
-            require_once "del_side.php";
+            require_once "delete_side.php";
+            require_once "add_person.php";
+            require_once "add_delete_vehicle.php";
         }
     }
 }
