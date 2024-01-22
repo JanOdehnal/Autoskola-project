@@ -40,7 +40,6 @@
                 <label for="choose_lec">Choose lector: </label>
                 <select name="choose_lec" id="choose_lec">
     <?php
-        
         $query = "SELECT id, name, surname, email from lector";
         if ($stmt = $con->prepare($query)) {
             $stmt->execute();
@@ -68,6 +67,7 @@ if (isset($_POST["posicion"]))
         else if ($_POST["choose_lec"] == null) echo "<script>document.getElementById('logs').innerHTML = 'You forgot choose lector!'</script>";
         else 
         {
+            //if (mysqli_fetch_assoc(mysqli_query($con, $sql))) wornimg sudent exists
             data_to_db($con, "insert into student(name, surname, email, phone_number, verify_strudent) values('" .$_POST["name"]. "','" .$_POST["surname"]. "','" .$_POST["email"]. "','" .$_POST["phone_number"]. "', '" .rand(100000, 999999). ")");
 
             data_to_db($con, "insert into student_course_lec(student_id, course_id, lector_id) values('" .$con->insert_id. "','" .$_POST["type_veh"]. "','" .$_POST["choose_lec"]. "')");

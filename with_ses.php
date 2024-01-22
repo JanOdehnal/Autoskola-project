@@ -18,8 +18,9 @@ if (isset($_SESSION["info"]))
     if ($_SESSION["possicion"] == "student")
     {
         echo "<script>document.getElementById('hello').innerHTML = 'Hello student ".$_SESSION["info"]["name"]." ".$_SESSION["info"]["surname"]."!'</script>";
-        require_once "engage_lesson.php";
         require_once "add_side.php";
+        require_once "engage_lesson.php";
+        
 
     }
     if ($_SESSION["possicion"] == "lector")
@@ -44,6 +45,7 @@ else
 {
     echo "<script>document.getElementById('hello').innerHTML = 'Hello spectacullar!'</script>";
 }
+require_once "create_timetable.php";
 ?>
 
 

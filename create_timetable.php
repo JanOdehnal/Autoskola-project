@@ -1,58 +1,3 @@
-<html>
-<div id="meet_add" style="visibility: hidden;">
-    <h1>Engage lesson</h1>
-    <form method="post">
-        <p id="start_date"></p>
-        <p id="start_hour"></p>
-        <p id="lector_id"></p>
-        <input type="hidden" id="engage_les" name="engage_les" value="engage_les">
-        <label for="meet_side">Choose where we meet:</label>
-        <select name="meet_side" id="meet_side" require>       
-<?php
-    /*$query = "select id, town, street, GPS_coordinate, more_info from sides";
-    if ($stmt = $con->prepare($query)) {
-        $stmt->execute();
-        $stmt->bind_result($id, $town, $street, $GPS_coordinate, $more_info);
-        while ($stmt->fetch()) {
-            echo '<option value="' . $id . '">' .$town. ', ' .$street. ', ' .$GPS_coordinate. ', ' .$more_info. '</option>';
-        }
-        $stmt->close();
-    }*/
-?>
-        </select>
-        <br>
-        <label for="message">Write some message:</label>
-        <input type="text" id="message" name="message">
-        <br>
-        <input type="submit" value="send">
-    </form>
-
-</div>
-
-
-
-
-
-
-</html>
-
-<script>
-    function change_vis(lector, pos_hour, date)
-    {
-        console.log(lector+"_0_"+pos_hour);
-        document.getElementById("meet_add").style.visibility = "visible";
-        document.getElementById("start_date").innerHTML = "This lesson starts at: " + date;
-        document.getElementById("start_hour").innerHTML = "at: " + document.getElementById(lector+"_0_"+pos_hour).innerHTML;
-        document.getElementById("lector_id").innerHTML = "with: " +document.getElementById(lector+"_lec").innerHTML;
-    }
-    function new_timetable()
-    {
-        
-    }
-
-
-</script>
-
 <?php
 
 class Timetable
@@ -81,8 +26,8 @@ class Timetable
 
 $my_timetable = new Timetable();
 $my_timetable->set_data(3, 5, 90, ["00:00", "01:00", "02:00", "03:00", "04:00"]);
-echo $my_timetable->get_time_less()[0];
-echo $my_timetable->get_weeks()."class<br>";
+//echo $my_timetable->get_time_less()[0];
+//echo $my_timetable->get_weeks()."class<br>";
 
 
 function get_last_Monday()
@@ -105,9 +50,9 @@ function get_day($sec_day)
     return $days[date("w", $sec_day)];
 }
 
-function create_table($lector, $my_timetable)
+function create_table($lector_row, $my_timetable)
 {
-    echo "<h1 id='" .$lector."_lec". "'>Lector</h1>";
+    echo "<h1 id='" .$lector_row["id"]."_lec". "'>" .$lector_row["name"]. " " .$lector_row["surname"]. "</h1>";
     $tmp=0;//use with sec - day
     $last_Mo=get_last_Monday();
     for ($h=0; $h < $my_timetable->get_weeks();$h++) // num of weeks
@@ -119,7 +64,7 @@ function create_table($lector, $my_timetable)
         {
             if ($h == 0 && $j == 0) $table=$table."<td>This week</td>";
             else if ($j==0) $table=$table."<td>" .$h. ". week</td>";
-            else $table=$table."<td id='" .$lector."_". $h ."_". $j . "'>".$my_timetable->get_time_less()[$j-1]."</td>";
+            else $table=$table."<td id='" .$lector_row["id"]."_". $h ."_". $j . "'>".$my_timetable->get_time_less()[$j-1]."</td>";// bez id
         }
         $table=$table."</tr>";
         for ($i = 0; $i < 7; $i++)// number of days
@@ -129,7 +74,7 @@ function create_table($lector, $my_timetable)
             {
                 $tmp=$last_Mo+24*3600*$i+$plas_week;
                 if ($j == 0) $table=$table."<td>".date("d.m.Y", $tmp).", ".get_day($tmp)."</td>";
-                else $table=$table."<td id='" .$lector. "_" . date("d-m-Y", $tmp) . "_" .$i. "' onclick=\"change_vis('" .$lector."','" . $j ."','".date("d-m-Y", $tmp). "')\">some text</td>";
+                else $table=$table."<td id='" .$lector_row["id"]. "_" . date("d-m-Y", $tmp) . "_" .$i. "' onclick=\"change_vis('" .$lector_row["id"]."','" . $j ."','".date("d.m.Y", $tmp). "')\">some text</td>";
             }
             $table=$table."</tr>";
         }
@@ -137,7 +82,13 @@ function create_table($lector, $my_timetable)
         echo $table;
     }
 }
-create_table(1, $my_timetable);
+
+$tmp_stat=mysqli_query(connect_mysqli(), "SELECT * from lector");
+while ($row = mysqli_fetch_assoc($tmp_stat))
+{
+    create_table($row, $my_timetable);
+}
+
 
 /*
 spectacullar
@@ -150,11 +101,11 @@ admin all
 
 <html>
 
-<div id="edyt_timetable" style="visibility: visible;">
+<!--<div id="edyt_timetable" style="visibility: visible;">
     <h1>Edyt timetable</h1>
     <form method="post">
 <?php
-    echo "<label for='time_t_weeks'>Num of weeks for future:</label>
+    /*echo "<label for='time_t_weeks'>Num of weeks for future:</label>
         <input id='time_t_weeks' type='number' min='0' value=".$my_timetable->get_weeks().">
         <br>
         <label for='timet_dur'>Duration:</label>
@@ -164,14 +115,14 @@ admin all
     {
         echo "<label for='tim_h_".$i."'>".$i. " hour:</label>
             <input type='time' id='tim_h_". $i ."' value='". $my_timetable->get_time_less()[$i-1] . "'><br>";
-    }
+    }*/
 ?>
         <input type="submit" value="Edyt">
     </form>
 </div>
 
 <p id="edyt_smf"></p>
-
+-->
 </html>
 <?php //dodelat info ze souboru
 if ($_POST)
