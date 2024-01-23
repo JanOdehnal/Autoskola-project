@@ -51,7 +51,6 @@
         //console.log(date_)
         document.getElementById("start_date_").value =  date_;
         document.getElementById("start_hour").innerHTML =  document.getElementById(lector+"_0_"+pos_hour).innerHTML;
-        
         document.getElementById("start_hour_").value =  pos_hour;
         document.getElementById("lector_name").innerHTML =  document.getElementById(lector+"_lec").innerHTML;
         document.getElementById("lector_name_").value =  lector;
@@ -59,9 +58,9 @@
 </script>
 
 <?php
-    if($isset($_POST["start_date_"]))
+    if(isset($_POST["start_date_"]))
     {
-        //TODO
+        data_to_db(connect_mysqli(), "INSERT into timetable(lesson_date, lesson_num, student_id, sides_id) values ('" .$_POST["start_date_"]. "', " .$_POST["start_hour_"]. ", " .$_SESSION["info"]["id"]. ", " .$_POST["meet_side"]. ") ");
     }
 
 ?>

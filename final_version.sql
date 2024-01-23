@@ -89,11 +89,11 @@ ENGINE = InnoDB;
 -- Table drive_sch_db.timetable
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS drive_sch_db.timetable (
-  lesson_date DATETIME NULL,
+  lesson_date DATE NULL,
   lesson_num INT NULL,
   student_id INT NOT NULL,
   sides_id INT NOT NULL,
-  PRIMARY KEY (student_id, sides_id),
+  -- PRIMARY KEY (student_id, sides_id),
   FOREIGN KEY (student_id) REFERENCES student(id),
   FOREIGN KEY (sides_id) REFERENCES sides(id))
 ENGINE = InnoDB;

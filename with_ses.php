@@ -20,8 +20,6 @@ if (isset($_SESSION["info"]))
         echo "<script>document.getElementById('hello').innerHTML = 'Hello student ".$_SESSION["info"]["name"]." ".$_SESSION["info"]["surname"]."!'</script>";
         require_once "add_side.php";
         require_once "engage_lesson.php";
-        
-
     }
     if ($_SESSION["possicion"] == "lector")
     {

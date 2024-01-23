@@ -8,7 +8,7 @@
     <div id="sign" style="visibility: hidden;">
         <h2>Sign in</h2>
         <form method="post">
-            <label for="email">*Email:</label>
+            <label for="email_s">*Email:</label>
             <input id="email_s" type="email" name="email_s" required/>
             <br>
             <label for="password_s">*Password:</label>
@@ -86,10 +86,10 @@ if (isset($_POST["email_l"]))
     if ($row = mysqli_fetch_assoc($sql_row))
     {
         if($row["password"] != null)
-            {
-                echo "<script>document.getElementById('logs').innerHTML = 'You are already logged in!'</script>";
-                return 0;
-            }
+        {
+            echo "<script>document.getElementById('logs').innerHTML = 'You are already logged in!'</script>";
+            return 0;
+        }
         else if ($row["verify_student"] == $_POST["password_ver"])
         {
             $_SESSION["possicion"] = "student";

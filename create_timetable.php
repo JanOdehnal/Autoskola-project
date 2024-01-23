@@ -52,9 +52,14 @@ function get_day($sec_day)
 
 function create_table($lector_row, $my_timetable)
 {
+
     echo "<h1 id='" .$lector_row["id"]."_lec". "'>" .$lector_row["name"]. " " .$lector_row["surname"]. "</h1>";
     $tmp=0;//use with sec - day
-    $last_Mo=get_last_Monday();
+    $last_Mo = get_last_Monday();
+    /*$sql_stat = mysqli_query(connect_mysqli(), "SELECT * from timetable where lesson_date > '".date("Y-m-d", get_last_Monday())."' and lector_id = " .$lector_row["id"]. " order by lesson_date, lesson_num");
+    echo $sql_stat;
+    if($row_t = mysqli_fetch_assoc($sql_stat));
+    echo $row_t;*/
     for ($h=0; $h < $my_timetable->get_weeks();$h++) // num of weeks
     {
         $plas_week=7*24*3600*$h;
@@ -74,6 +79,12 @@ function create_table($lector_row, $my_timetable)
             {
                 $tmp=$last_Mo+24*3600*$i+$plas_week;
                 if ($j == 0) $table=$table."<td>".date("d.m.Y", $tmp).", ".get_day($tmp)."</td>";
+                /*if ($row_t["lesson_date"] == date("Y-m-d", $tmp) && $row_t["lesson_num"] == $j)
+                {
+                    $table=$table."<td></td>";
+                    if($row_t = mysqli_fetch_assoc($sql_stat));
+
+                }*/
                 else $table=$table."<td id='" .$lector_row["id"]. "_" . date("d-m-Y", $tmp) . "_" .$i. "' onclick=\"change_vis('" .$lector_row["id"]."','" . $j ."','".date("d.m.Y", $tmp). "')\">some text</td>";
             }
             $table=$table."</tr>";
