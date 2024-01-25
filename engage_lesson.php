@@ -17,7 +17,7 @@
         <input type="time" id="start_hour">
         <br>   -->  
 <?php
-    $query = "select id, town, street, GPS_coordinate, more_info from sides";
+    $query = "SELECT id, town, street, GPS_coordinate, more_info from sides";
     if ($stmt = $con->prepare($query)) {
         $stmt->execute();
         $stmt->bind_result($id, $town, $street, $GPS_coordinate, $more_info);
