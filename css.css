@@ -1,0 +1,48 @@
+.taken{
+    background-color: coral;
+}
+
+.free{
+    background-color: rgb(170, 236, 104);
+}
+
+
+table, td{
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+
+div.jump_div {
+    position: fixed;
+    top:  50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 10;
+    background-color: rgb(204, 154, 250);
+    visibility: hidden;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+div#log_sign
+{
+    position: absolute;
+    right: 0%;
+    top: 5%;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+td.else{
+    background-color: rgb(167, 162, 162);
+}
+
+table{
+    background-color: rgb(121, 118, 118);
+}
+
+body{
+    background-color: rgb(255, 255, 255);
+}
+

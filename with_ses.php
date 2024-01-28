@@ -5,6 +5,7 @@ $con = connect_mysqli();
 ?>
 <script src="javascript.js"></script>
 <html>
+    <link rel="stylesheet" href="css.css"> 
     <div id="hello"></div>
     <div id="logs"></div>
 </html>

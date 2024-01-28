@@ -5,7 +5,7 @@
     </div>
 
 
-    <div id="sign" style="visibility: hidden;">
+    <div id="sign" class="jump_div">
         <h2>Sign in</h2>
         <form method="post">
             <label for="email_s">*Email:</label>
@@ -20,7 +20,7 @@
     </div>
 
 
-    <div id="log" style="visibility: hidden;">
+    <div id="log" class="jump_div">
         <h2>Log in</h2>
         <form method="post">
             <label for="email_l">*Email:</label>

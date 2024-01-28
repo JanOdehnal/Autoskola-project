@@ -58,14 +58,8 @@ function create_table($lector_row, $my_timetable)
     $last_Mo = get_last_Monday();
 
     $sql="SELECT  distinct x.* , y.lector_id from timetable x left join student_course_lec y on x.student_id = y.student_id where x.lesson_date >= '".date("Y-m-d", get_last_Monday())."' and y.lector_id=" .$lector_row["id"]. " ORDER BY x.lesson_date, x.lesson_num;";
-    echo $sql;
+    //echo $sql;
     $sql_stat = mysqli_query(connect_mysqli(), $sql);
-    //echo $sql_stat;
-    /*while($row_t = mysqli_fetch_assoc($sql_stat))
-    {
-        print_r($row_t);
-    }
-    //echo $row_t;*/
     $no_records = false;
     if (!$row_t = mysqli_fetch_assoc($sql_stat)) $no_records = true; 
 
@@ -78,7 +72,7 @@ function create_table($lector_row, $my_timetable)
         {
             if ($h == 0 && $j == 0) $table=$table."<td>This week</td>";
             else if ($j==0) $table=$table."<td>" .$h. ". week</td>";
-            else $table=$table."<td id='" .$lector_row["id"]."_". $h ."_". $j . "'>".$my_timetable->get_time_less()[$j-1]."</td>";// bez id
+            else $table=$table."<td class='else' id='" .$lector_row["id"]."_". $h ."_". $j . "'>".$my_timetable->get_time_less()[$j-1]."</td>";// bez id
         }
         $table=$table."</tr>";
         for ($i = 0; $i < 7; $i++)// number of days
@@ -87,14 +81,15 @@ function create_table($lector_row, $my_timetable)
             for ($j = 0; $j < $my_timetable->get_num_less()+1; $j++)// hours again
             {
                 $tmp=$last_Mo+24*3600*$i+$plas_week;
-                if ($j == 0) $table=$table."<td>".date("d.m.Y", $tmp).", ".get_day($tmp)."</td>";
+                if ($j == 0) $table=$table."<td class='else'>".date("d.m.Y", $tmp).", ".get_day($tmp)."</td>";
                 else if (!$no_records && $row_t["lesson_date"] == date("Y-m-d", $tmp) && $row_t["lesson_num"] == $j)
                 {
-                    $table=$table."<td></td>";
+                    if ($row_t["student_id"]==$_SESSION["info"]["id"]) $table=$table."<td class='taken'>your lesson</td>";
+                    else $table=$table."<td class='taken'>taken</td>";
                     if ($no_records);
                     else if(!$row_t = mysqli_fetch_assoc($sql_stat)) $no_records = true;
                 }
-                else $table=$table."<td id='" .$lector_row["id"]. "_" . date("d-m-Y", $tmp) . "_" .$i. "' onclick=\"change_vis('" .$lector_row["id"]."','" . $j ."','".date("d.m.Y", $tmp). "')\">some text</td>";
+                else $table=$table."<td class='free' id='" .$lector_row["id"]. "_" . date("d-m-Y", $tmp) . "_" .$i. "' onclick=\"change_vis('" .$lector_row["id"]."','" . $j ."','".date("d.m.Y", $tmp). "')\">some text</td>";
             }
             $table=$table."</tr>";
         }
@@ -111,7 +106,7 @@ while ($row = mysqli_fetch_assoc($tmp_stat))
 
 
 /*
-spectacullar
+spectacullar all
 student 1times || all
 lector 1times
 admin all
