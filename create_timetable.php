@@ -84,7 +84,7 @@ function create_table($lector_row, $my_timetable)
                 if ($j == 0) $table=$table."<td class='else'>".date("d.m.Y", $tmp).", ".get_day($tmp)."</td>";
                 else if (!$no_records && $row_t["lesson_date"] == date("Y-m-d", $tmp) && $row_t["lesson_num"] == $j)
                 {
-                    if ($row_t["student_id"]==$_SESSION["info"]["id"]) $table=$table."<td class='taken'>your lesson</td>";
+                    if (isset($_SESSION["possicion"]) && $_SESSION["possicion"]=="student" && $row_t["student_id"]==$_SESSION["info"]["id"]) $table=$table."<td class='taken'>your lesson</td>";
                     else $table=$table."<td class='taken'>taken</td>";
                     if ($no_records);
                     else if(!$row_t = mysqli_fetch_assoc($sql_stat)) $no_records = true;
@@ -101,7 +101,7 @@ function create_table($lector_row, $my_timetable)
 $tmp_stat=mysqli_query(connect_mysqli(), "SELECT * from lector");
 while ($row = mysqli_fetch_assoc($tmp_stat))
 {
-    create_table($row, $my_timetable);
+    if ($row["active_lec"]=="activ") create_table($row, $my_timetable);
 }
 
 

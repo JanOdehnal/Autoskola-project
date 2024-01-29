@@ -21,7 +21,7 @@
 
 
     <div id="log" class="jump_div">
-        <h2>Log in</h2>
+        <h2>Registration</h2>
         <form method="post">
             <label for="email_l">*Email:</label>
             <input id="email_l" type="email" name="email_l" required/>

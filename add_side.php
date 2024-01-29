@@ -27,6 +27,6 @@ $con = connect_mysqli();
 <?php
 if (isset($_POST["town"]))
 {
-    data_to_db($con, "INSERT into sides(town, street, GPS_coordinate, more_info) values ('" .$_POST["town"]. "', '" .$_POST["street"]."', '".$_POST["jps"]."', '".$_POST["info"]."')");
+    data_to_db($con, "INSERT into sides(town, street, GPS_coordinate, more_info, visibility) values ('" .$_POST["town"]. "', '" .$_POST["street"]."', '".$_POST["jps"]."', '".$_POST["info"]."', 'true')");
 }
 ?>

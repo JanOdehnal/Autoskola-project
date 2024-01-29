@@ -3,11 +3,11 @@
         <h1>Add new person</h1>
         <form method="POST">
             *Choode who it is:<br>
-            <input type="radio" id="student" name="posicion" value="student" onclick="change_visibility('if_student', true)" required>
+            <input type="radio" id="student" name="posicion" value="student" onclick="change_visibility('if_student', true), change_visibility('active_lec', false)" required>
             <label for="student">Student</label>
-            <input type="radio" id="lector" name="posicion" value="lector" onclick="change_visibility('if_student', false)">
+            <input type="radio" id="lector" name="posicion" value="lector" onclick="change_visibility('active_lec', true), change_visibility('if_student', false)">
             <label for="lector">Lector</label>
-            <input type="radio" id="admin" name="posicion" value="admin" onclick="change_visibility('if_student', false)">
+            <input type="radio" id="admin" name="posicion" value="admin" onclick="change_visibility('active_lec', true), change_visibility('if_student', false)">
             <label for="admin">Admin</label>
             <br>
             <label for="name">*Name:</label>
@@ -24,12 +24,12 @@
             <br/>
             *In what vehicle will student drive? / Lector prefer:<br>
     <?php
-        $query = "SELECT id, vehicle_type, num_of_less from course";
+        $query = "SELECT id, vehicle_type, num_of_less, visibility from course";
         if ($stmt = $con->prepare($query)) {
             $stmt->execute();
-            $stmt->bind_result($id, $vehicle, $lesson_num);
+            $stmt->bind_result($id, $vehicle, $lesson_num, $visibility);
             while ($stmt->fetch()) {
-                echo '<input type="radio" id="'. $vehicle .'" name="type_veh" value="'. $id .'">
+                if ($visibility=='true') echo '<input type="radio" id="'. $vehicle .'" name="type_veh" value="'. $id .'">
                     <label for="'. $vehicle .'">'. $vehicle .'</label>';
             }
             $stmt->close();
@@ -52,6 +52,12 @@
     ?>
                 </select>
             </div>
+            <div id="active_lec" style="visibility: hidden;">
+                <input type="radio" id="active" name="if_activ" value="activ">
+                <label for="active">Active</label>
+                <input type="radio" id="passiv" name="if_activ" value="passiv">
+                <label for="passiv">Passive</label>
+            </div>
             <input type="submit" value="Registry person">
         </form>
     </div>
@@ -68,13 +74,28 @@ if (isset($_POST["posicion"]))
         else 
         {
             //if (mysqli_fetch_assoc(mysqli_query($con, $sql))) wornimg sudent exists
-            data_to_db($con, "insert into student(name, surname, email, phone_number, verify_strudent) values('" .$_POST["name"]. "','" .$_POST["surname"]. "','" .$_POST["email"]. "','" .$_POST["phone_number"]. "', '" .rand(100000, 999999). ")");
-
+            data_to_db($con, "insert into student(name, surname, email, phone_number, verify_student) values('" .$_POST["name"]. "','" .$_POST["surname"]. "','" .$_POST["email"]. "','" .$_POST["phone_number"]. "', '" .rand(100000, 999999). "')");
             data_to_db($con, "insert into student_course_lec(student_id, course_id, lector_id) values('" .$con->insert_id. "','" .$_POST["type_veh"]. "','" .$_POST["choose_lec"]. "')");
         }
     }
-    else if ($_POST["posicion"] == "lector") data_to_db($con, "insert into lector(name, surname, email, phone_number, prefer_veh, possicion, verify_lector) values('" .$_POST["name"]. "', '" .$_POST["surname"]. "','" .$_POST["email"]. "','" .$_POST["phone_number"]. "','" .$_POST["type_veh"]. "','lector', " .rand(100000, 999999). ")");
-    else if ($_POST["posicion"] == "admin") data_to_db($con, "insert into lector(name, surname, email, phone_number, prefer_veh, possicion, verify_lector) values('" .$_POST["name"]. "', '" .$_POST["surname"]. "','" .$_POST["email"]. "','" .$_POST["phone_number"]. "','" .$_POST["type_veh"]. "','admin', " .rand(100000, 999999). ")");
+    else if ($_POST["posicion"] == "lector") 
+    {
+        if ($_POST["if_activ"]==NULL)
+        {
+            echo "<script>document.getElementById('logs').innerHTML = 'You forgot write if he is active or passiv!'</script>";
+            return 0;
+        }
+        data_to_db($con, "insert into lector(name, surname, email, phone_number, prefer_veh, possicion, verify_lector, active_lec) values('" .$_POST["name"]. "', '" .$_POST["surname"]. "','" .$_POST["email"]. "','" .$_POST["phone_number"]. "','" .$_POST["type_veh"]. "','lector', " .rand(100000, 999999). ", '" .$_POST["if_activ"]. "')");
+    }
+    else if ($_POST["posicion"] == "admin")
+    {
+        if ($_POST["if_activ"]==NULL)
+        {
+            echo "<script>document.getElementById('logs').innerHTML = 'You forgot write if he is active or passiv!'</script>";
+            return 0;
+        }
+        data_to_db($con, "insert into lector(name, surname, email, phone_number, prefer_veh, possicion, verify_lector, active_lec) values('" .$_POST["name"]. "', '" .$_POST["surname"]. "','" .$_POST["email"]. "','" .$_POST["phone_number"]. "','" .$_POST["type_veh"]. "','admin', " .rand(100000, 999999). ", '" .$_POST["if_activ"]. "')");
+    }
     //mail("ode2@seznam.cz", "You were log in in driving school", "You were log in in driving school. Your verifycation code is: " .rand(100000, 999999). ".");
     // last if delte if
     //send email with verificational password // current net working

@@ -5,12 +5,12 @@
             <label for="mod_side">Delete side: </label>
             <select name="mod_side" id="mod_side" require>       
     <?php
-        $query = "select id, town, street, GPS_coordinate, more_info from sides";
+        $query = "select id, town, street, GPS_coordinate, more_info, visibility from sides";
         if ($stmt = $con->prepare($query)) {
             $stmt->execute();
-            $stmt->bind_result($id, $town, $street, $GPS_coordinate, $more_info);
+            $stmt->bind_result($id, $town, $street, $GPS_coordinate, $more_info, $visibility);
             while ($stmt->fetch()) {
-                echo '<option value="' . $id . '">' .$town. ', ' .$street. ', ' .$GPS_coordinate. ', ' .$more_info. '</option>';
+                if ($visibility=='true') echo '<option value="' . $id . '">' .$town. ', ' .$street. ', ' .$GPS_coordinate. ', ' .$more_info. '</option>';
             }
             $stmt->close();
         }
@@ -24,6 +24,6 @@
 <?php
 if (isset($_POST["mod_side"]))
 {
-    data_to_db($con, "DELETE FROM sides WHERE id=".$_POST["mod_side"]);
+    data_to_db($con, "UPDATE sides SET visibility = 'false' WHERE (id = " .$_POST["mod_side"]. ")");
 }
 ?>

@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS drive_sch_db.lector ( -- prefer vehicle???
   phone_number VARCHAR(12) NULL, -- for foreins, int(12) is imposible
   possicion ENUM('lector', 'admin') NULL,
   prefer_veh INT NULL, -- if lector specialized on some type of vehicle
+  active_lec ENUM('activ', 'passiv'),
   PRIMARY KEY (id),
   FOREIGN KEY (prefer_veh) REFERENCES course (id))
 ENGINE = InnoDB;
@@ -56,6 +57,7 @@ CREATE TABLE IF NOT EXISTS drive_sch_db.sides (
   street VARCHAR(45) NULL,
   GPS_coordinate VARCHAR(45) NULL UNIQUE,
   more_info VARCHAR(45) NULL,
+  visibility ENUM('true', 'false'),
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 

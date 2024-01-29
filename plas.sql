@@ -1,11 +1,11 @@
 insert into course(vehicle_type, num_of_less) values ('Manual car', 28);
 insert into course(vehicle_type, num_of_less) values ('Automatic car', 28);
+insert into lector(name, surname, email, password, possicion) values ('Jan', 'Ode', 'jan@ode', '1234', 'admin');
 delete from lector where id=2;
 delete from course where id=4;
 delete from student where id=7;
 delete from sides where id=2;
 delete from timetable where lesson_num = 4;
-
 delete from student_course_lec where student_id = 7;
 -- alter table course modify vehicle_type varchar(45) null unique;
 select * from lector;
@@ -15,6 +15,7 @@ select * from sides;
 select * from student_course_lec;
 select * from timetable;
 use drive_sch_db;
+alter table sides add column `visible` ENUM('true', 'false');
 UPDATE student SET password = "1234" where email = 'adam@deb';
 UPDATE lector SET verify_lector = "1234" where email = 'jan@pako';
 UPDATE student SET verify_student = "1234" where email = 'ode2@seznam.cz';
