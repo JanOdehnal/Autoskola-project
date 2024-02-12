@@ -29,7 +29,7 @@
             $stmt->execute();
             $stmt->bind_result($id, $vehicle, $lesson_num, $visibility);
             while ($stmt->fetch()) {
-                if ($visibility=='true') echo '<input type="radio" id="'. $vehicle .'" name="type_veh" value="'. $id .'">
+                if ($visibility == 'true') echo '<input onclick = "add_hours('.$lesson_num.')" type="radio" id="'. $vehicle .'" name="type_veh" value="'. $id .'">
                     <label for="'. $vehicle .'">'. $vehicle .'</label>';
             }
             $stmt->close();
@@ -51,6 +51,10 @@
         }
     ?>
                 </select>
+                <br>
+                <label for="hour_num">Student will have </label>
+                <input type="number" id="hour_num" name="hour_num">
+                <label for="hour_num">hours.</label>
             </div>
             <div id="active_lec" style="visibility: hidden;">
                 <input type="radio" id="active" name="if_activ" value="activ">
@@ -64,6 +68,10 @@
 </html>
 
 <?php
+/*
+change log
+    4.2 solve if person already exist //must try it
+*/
 if (isset($_POST["posicion"]))
 { 
     if ($_POST["posicion"] == "student") // add person
@@ -73,28 +81,30 @@ if (isset($_POST["posicion"]))
         else if ($_POST["choose_lec"] == null) echo "<script>document.getElementById('logs').innerHTML = 'You forgot choose lector!'</script>";
         else 
         {
-            //if (mysqli_fetch_assoc(mysqli_query($con, $sql))) wornimg sudent exists
-            data_to_db($con, "insert into student(name, surname, email, phone_number, verify_student) values('" .$_POST["name"]. "','" .$_POST["surname"]. "','" .$_POST["email"]. "','" .$_POST["phone_number"]. "', '" .rand(100000, 999999). "')");
-            data_to_db($con, "insert into student_course_lec(student_id, course_id, lector_id) values('" .$con->insert_id. "','" .$_POST["type_veh"]. "','" .$_POST["choose_lec"]. "')");
+            if ($x=mysqli_fetch_assoc(mysqli_query($con, "SELECT * from student where email = '".$_POST["email"]."'")))
+            {
+                echo "<script>document.getElementById('logs').innerHTML = 'This student already exists!'</script>";
+            }
+            else
+            {
+                data_to_db($con, "insert into student(name, surname, email, phone_number, verify_student) values('" .$_POST["name"]. "','" .$_POST["surname"]. "','" .$_POST["email"]. "','" .$_POST["phone_number"]. "', '" .rand(100000, 999999). "')");
+                data_to_db($con, "insert into student_course_lec(student_id, course_id, lector_id) values('" .$con->insert_id. "','" .$_POST["type_veh"]. "','" .$_POST["choose_lec"]. "')");
+            }
         }
     }
-    else if ($_POST["posicion"] == "lector") 
+    else
     {
         if ($_POST["if_activ"]==NULL)
         {
             echo "<script>document.getElementById('logs').innerHTML = 'You forgot write if he is active or passiv!'</script>";
             return 0;
         }
-        data_to_db($con, "insert into lector(name, surname, email, phone_number, prefer_veh, possicion, verify_lector, active_lec) values('" .$_POST["name"]. "', '" .$_POST["surname"]. "','" .$_POST["email"]. "','" .$_POST["phone_number"]. "','" .$_POST["type_veh"]. "','lector', " .rand(100000, 999999). ", '" .$_POST["if_activ"]. "')");
-    }
-    else if ($_POST["posicion"] == "admin")
-    {
-        if ($_POST["if_activ"]==NULL)
+        else if (mysqli_fetch_assoc(mysqli_query($con, "SELECT * from lector where email = '".$_POST["email"]."'")))
         {
-            echo "<script>document.getElementById('logs').innerHTML = 'You forgot write if he is active or passiv!'</script>";
-            return 0;
+            echo "<script>document.getElementById('logs').innerHTML = 'This ".$_POST["posicion"]." already exists!'</script>";
+
         }
-        data_to_db($con, "insert into lector(name, surname, email, phone_number, prefer_veh, possicion, verify_lector, active_lec) values('" .$_POST["name"]. "', '" .$_POST["surname"]. "','" .$_POST["email"]. "','" .$_POST["phone_number"]. "','" .$_POST["type_veh"]. "','admin', " .rand(100000, 999999). ", '" .$_POST["if_activ"]. "')");
+        else data_to_db($con, "insert into lector(name, surname, email, phone_number, prefer_veh, possicion, verify_lector, active_lec) values('" .$_POST["name"]. "', '" .$_POST["surname"]. "','" .$_POST["email"]. "','" .$_POST["phone_number"]. "','" .$_POST["type_veh"]. "','" .$_POST["posicion"]. "', " .rand(100000, 999999). ", '" .$_POST["if_activ"]. "')");
     }
     //mail("ode2@seznam.cz", "You were log in in driving school", "You were log in in driving school. Your verifycation code is: " .rand(100000, 999999). ".");
     // last if delte if

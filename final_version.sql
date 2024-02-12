@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS drive_sch_db.student (
   password VARCHAR(45) NULL,
   verify_student VARCHAR(45) NULL,
   phone_number VARCHAR(12) NULL, -- for foreins, int(12) is imposible
+  lesson_num INT NULL,
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 
@@ -70,6 +71,7 @@ CREATE TABLE IF NOT EXISTS drive_sch_db.course (
 id INT NOT NULL AUTO_INCREMENT,
 vehicle_type VARCHAR(45) NULL UNIQUE,
 num_of_less INT NULL,
+visibility ENUM('true', 'false'),
 PRIMARY KEY (id))
 ENGINE = InnoDB;
 
@@ -95,6 +97,7 @@ CREATE TABLE IF NOT EXISTS drive_sch_db.timetable (
   lesson_num INT NULL,
   student_id INT NOT NULL,
   sides_id INT NOT NULL,
+  finish_lesson ENUM('true', 'false') NULL,
   -- PRIMARY KEY (student_id, sides_id),
   FOREIGN KEY (student_id) REFERENCES student(id),
   FOREIGN KEY (sides_id) REFERENCES sides(id))

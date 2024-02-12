@@ -19,12 +19,12 @@
             <select name="del_vehicle" id="del_vehicle" require>
             
     <?php
-        $query = "select id, vehicle_type from course";
+        $query = "select id, vehicle_type, visibility from course";
         if ($stmt = $con->prepare($query)) {
             $stmt->execute();
-            $stmt->bind_result($id, $vehicle);
+            $stmt->bind_result($id, $vehicle, $visibility);
             while ($stmt->fetch()) {
-                echo '<option value="' . $id . '">' .$vehicle. '</option>';
+                if ($visibility=='true') echo '<option value="' . $id . '">' .$vehicle. '</option>';
             }
             $stmt->close();
         }
@@ -43,8 +43,8 @@ if (isset($_POST["veh_name"])) //add vehicle
     data_to_db($con, "insert into course(vehicle_type, num_of_less) values ('" .$_POST["veh_name"]. "', " .$_POST["num_less"].")");
 }
 
-if (isset($_POST["del_veh"])) //delete vehicle
+if (isset($_POST["del_vehicle"])) //delete vehicle
 {
-    data_to_db($con, "DELETE FROM course WHERE id=".$_POST["del_vehicle"]);
+    data_to_db($con, "UPDATE course SET visibility = 'false' WHERE (id = " .$_POST["del_vehicle"]. ")");
 }
 ?>
