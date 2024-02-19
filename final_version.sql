@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS drive_sch_db.student (
   verify_student VARCHAR(45) NULL,
   phone_number VARCHAR(12) NULL, -- for foreins, int(12) is imposible
   lesson_num INT NULL,
+  num_veh INT DEFAULT 1,
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 

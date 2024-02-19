@@ -103,7 +103,10 @@ function create_table($lector_row, $my_timetable)
                             else if ($row_t["finish_lesson"]=="false") $table=$table."<td onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].", '".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."')\" class='taken'>lesson not done</td>";
                             else if (time()-300 < $tmp+strtotime($my_timetable->get_time_less()[$j-1].":00")-strtotime("00:00:00")+$my_timetable->get_duration()*60) $table=$table."<td  onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', true)\" class='taken'>info</td>";
                             else $table=$table."<td class='taken' onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].", '".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."')\">not fill in</td>";
+                            //deleting huurs by admin
+                            //else $table=$table."<td class='taken' onclick=\"engage_less('" .$lector_row["id"]."','" . $j ."','".date("d.m.Y", $tmp). "', 'true')\">not fill in</td>";
                         }
+
                         else $table=$table."<td class='taken'>taken</td>";
                     }
                     else $table=$table."<td class='taken'>taken</td>";
@@ -178,5 +181,5 @@ if ($_POST)
     }
 }
 
-echo time()+$my_timetable->get_registry().",".strtotime($my_timetable->get_time_less()[1].":00")-strtotime("00:00:00");
+//echo time()+$my_timetable->get_registry().",".strtotime($my_timetable->get_time_less()[1].":00")-strtotime("00:00:00");
 ?>

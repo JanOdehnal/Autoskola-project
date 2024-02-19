@@ -43,3 +43,11 @@ insert into student_course_lec(student_id, lector_id, course_id) value (1, 1, 4)
 SELECT  x.* , y.lector_id from timetable x left join student_course_lec y on x.student_id = y.student_id where x.lesson_date > '2023-01-22' and lector_id=3;
 SELECT x.* , y.lector_id from timetable x left join student_course_lec y on x.student_id = y.student_id where x.lesson_date > '2024-01-22' and lector_id=1;
 SELECT distinct x.* , y.lector_id, z.* from timetable x left join student_course_lec y on x.student_id = y.student_id left join sides z on x.sides_id = z.id where x.lesson_date >= '2024-02-04' and y.lector_id=3 ORDER BY x.lesson_date, x.lesson_num;
+
+
+
+
+alter table student add column num_veh INT DEFAULT 1;
+create 
+begin if new.telefon = null then set new.telefon= '000000000'  
+end if
