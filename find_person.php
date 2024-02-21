@@ -3,35 +3,30 @@
     <h2>Filterable Table</h2>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <input class="form-control" id="myInput" type="text" placeholder="Search..">
-    <table>
+    <table id="myTable">
     <br>
-        <?php
-
-$sql_stat = mysqli_query(connect_mysqli(), "SELECT * from lector");
-$filter="";
-foreach ($row = mysqli_fetch_assoc($sql_stat))
+<?php
+include_once "connect_mysqli.php";
+//$sql_stat = mysqli_query(connect_mysqli(), "SELECT * from lector");
+$filter = "";
+$sql_field = ["lector", "student", "sides", "course"];
+foreach (array_values($sql_field) as $sql_and)
 {
-    $filter=$filter."<tr>";
-    foreach ($cell = array_keys($row))
+    $sql_stat = mysqli_query(connect_mysqli(), "SELECT * from ".$sql_and);
+    while ($row = mysqli_fetch_assoc($sql_stat))
     {
-        $filter="<td>".$cell."</td>";
+        $filter=$filter."<tr>";
+        foreach (array_values($row) as $cell)
+        {
+            $filter=$filter."<td>".$cell."</td>";
+        }
+        $filter=$filter."</tr>";
     }
-    $filter=$filter."</tr>";
 }
 
-$sql_stat = mysqli_query(connect_mysqli(), "SELECT * from student");
-foreach ($row = mysqli_fetch_assoc($sql_stat))
-{
-    $filter=$filter."<tr>";
-    foreach ($cell = array_keys($row))
-    {
-        $filter="<td>".$cell."</td>";
-    }
-    $filter=$filter."</tr>";
-}
+echo $filter;
 
-
-        ?>
+?>
         </table>
 </div>
 </html>

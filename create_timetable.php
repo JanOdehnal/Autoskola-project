@@ -87,7 +87,13 @@ function create_table($lector_row, $my_timetable)
                 if ($j == 0) $table=$table."<td class='else'>".date("d.m.Y", $tmp).", ".get_day($tmp)."</td>";//1st col date...
                 else if (!$no_records && $row_t["lesson_date"] == date("Y-m-d", $tmp) && $row_t["lesson_num"] == $j)
                 {
-                    if (isset($_SESSION["possicion"]))
+                    if ($row_t["student_id"] == 0)
+                    {
+                        if ($_SESSION["info"]["possition"]=="admin") $table=$table."<td onclick=\"engage_less('" .$lector_row["id"]."','" . $j ."','".date("d.m.Y", $tmp). "', 'true')\" class='taken'>driving school taken</td>";
+                        if ($_SESSION["info"]["possition"]=="lector") $table=$table."<td  onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', true)\" class='taken'>info</td>";
+                        else $table=$table."<td>driving school</td>";
+                    }
+                    else if (isset($_SESSION["possicion"]))
                     {
                         //TODO if finish, checked
                         if ($_SESSION["possicion"]=="student" && $row_t["student_id"]==$_SESSION["info"]["id"]) 
@@ -99,6 +105,7 @@ function create_table($lector_row, $my_timetable)
                         }
                         else if ($_SESSION["possicion"]=="lector")
                         {
+                            //if ($_SESSION["info"]["possition"] == "admin") $table=$table."<td onclick=\"engage_less('" .$lector_row["id"]."','" . $j ."','".date("d.m.Y", $tmp). "', 'true')\" class='taken'>taken</td>";
                             if ($row_t["finish_lesson"]=="true") $table=$table."<td onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].", '".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."')\" class='taken'>lesson done</td>";
                             else if ($row_t["finish_lesson"]=="false") $table=$table."<td onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].", '".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."')\" class='taken'>lesson not done</td>";
                             else if (time()-300 < $tmp+strtotime($my_timetable->get_time_less()[$j-1].":00")-strtotime("00:00:00")+$my_timetable->get_duration()*60) $table=$table."<td  onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', true)\" class='taken'>info</td>";
@@ -112,8 +119,9 @@ function create_table($lector_row, $my_timetable)
                     else $table=$table."<td class='taken'>taken</td>";
                     if(!$row_t = mysqli_fetch_assoc($sql_stat)) $no_records = true;
 
-                }
+                }//problems
                 else if (isset($_SESSION["possicion"]) && $_SESSION["possicion"]=="student" && time()+$my_timetable->get_registry()*3600 < $tmp+strtotime($my_timetable->get_time_less()[$j-1].":00")-strtotime("00:00:00")) $table=$table."<td class='free' id='" .$lector_row["id"]. "_" . date("d-m-Y", $tmp) . "_" .$i. "' onclick=\"engage_less('" .$lector_row["id"]."','" . $j ."','".date("d.m.Y", $tmp). "')\">can sign in</td>";
+                else if (isset($_SESSION["possicion"]) && $_SESSION["possicion"]=="lector" && $_SESSION["info"]["possicion"]=="admin") $table=$table."<td class='free' onclick=\"engage_less('" .$lector_row["id"]."','" . $j ."','".date("d.m.Y", $tmp). "')\">can sign in</td>";
                 else $table=$table."<td class='free' id='" .$lector_row["id"]. "_" . date("d-m-Y", $tmp) . "_" .$i. "')>free lesson</td>";
             }
             $table=$table."</tr>";

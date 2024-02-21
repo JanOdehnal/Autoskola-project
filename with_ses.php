@@ -11,8 +11,10 @@ $con = connect_mysqli();
 </html>
 
 <?php
-require "log_out.php";
-require "log_in.php";
+require_once "log_out.php";
+require_once "log_in.php";
+
+require_once "find_person.php";//
 
 if (isset($_SESSION["info"]))
 {
@@ -39,6 +41,7 @@ if (isset($_SESSION["info"]))
             require_once "add_person.php";
             require_once "add_delete_vehicle.php";
             require_once "passed_lesson.php";
+            require_once "engage_lesson.php";
 
         }
     }
