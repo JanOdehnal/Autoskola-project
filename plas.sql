@@ -1,6 +1,6 @@
 insert into course(vehicle_type, num_of_less) values ('Manual car', 28);
 insert into course(vehicle_type, num_of_less) values ('Automatic car', 28);
-insert into lector(name, surname, email, password, possicion) values ('Jan', 'Ode', 'jan@ode', '1234', 'admin');
+insert into student(id) values (0);
 delete from lector where id=2;
 delete from course where id=4;
 delete from student where id=7;
@@ -15,6 +15,7 @@ select * from sides;
 select * from student_course_lec;
 select * from timetable;
 select count(id) from lector;
+select count(student_id) from timetable where student_id = 1;
 use drive_sch_db;
 alter table lector drop visibility;
 alter table sides add column visibility ENUM('true', 'false');
