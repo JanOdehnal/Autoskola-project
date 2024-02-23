@@ -92,39 +92,39 @@ if(isset($_POST["start_date_f_"]))
 {  
     if (isset($_POST["del"]) && $_POST["del"] == "del")
     {
-        if (isset($_SESSION["possicion"]) && $_SESSION["possicion"] == "admin" && mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT student_id from timetable where lesson_date =".$_POST["start_hour_f_"]." and lesson_num = ".$_POST["start_hour_f_"])) != 0) //if admin delete student //
+        /*if (isset($_SESSION["possicion"]) && $_SESSION["possicion"] == "admin" && mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT student_id from timetable where lesson_date =".$_POST["start_hour_f_"]." and lesson_num = ".$_POST["start_hour_f_"])) != 0) //if admin delete student //
         {
             ;//TODO//email
-        }
-        data_to_db(connect_mysqli(), "DELETE from timetable where lesson_date = '" .$_POST["start_date_"]. "' && lesson_num = ".$_POST["start_hour_"]);
+        }*/
+        data_to_db(connect_mysqli(), "DELETE from timetable where lesson_date = '" .$_POST["start_date_f_"]. "' && lesson_num = ".$_POST["start_hour_f_"]);
         echo "<script>document.getElementById('logs').innerHTML = 'You delete lessons!'</script>";
     }
     else if ($_POST["meet_side"] != null && $_SESSION["possicion"] == "student")// try
     {
-        if (mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT count(student_id) from timetable where lesson_date = " .$_POST["start_date_f_"]. " and lesson_num = " .$_POST["start_hour_f_"]))==1)
+        if (array_values(mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT count(student_id) from timetable where lesson_date = '" .$_POST["start_date_f_"]. "' and lesson_num = " .$_POST["start_hour_f_"])))[0] > 0)
         {
             echo "<script>document.getElementById('logs').innerHTML = 'Someone was faster!'</script>";
             return 0;
         }
-        if (mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT count(student_id) from timetable where student_id = " .$_SESSION["info"]["id"])) >= $_SESSION["info"]["lesson_num"])
+        if (array_values(mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT count(student_id) from timetable where student_id = " .$_SESSION["info"]["id"])))[0] >= $_SESSION["info"]["lesson_num"])
         {
             echo "<script>document.getElementById('logs').innerHTML = 'You pass all your hours!'</script>";
             return 0;
         }
-        if (mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT count(student_id) from timetable where lesson_date = " .$_POST["start_date_f_"])) == 0)
+        if (array_values(mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT count(student_id) from timetable where lesson_date = '" .$_POST["start_date_f_"]. "' and student_id = ".$_SESSION["info"]["id"])))[0] != 0)
         {
             // if lesson 90 min
             echo "<script>document.getElementById('logs').innerHTML = 'You can have only 1 lesson in day!'</script>";
             return 0;
         }
         data_to_db(connect_mysqli(), "INSERT into timetable(lesson_date, lesson_num, student_id, sides_id) values ('" .$_POST["start_date_f_"]. "', " .$_POST["start_hour_f_"]. ", " .$_SESSION["info"]["id"]. ", " .$_POST["meet_side"]. ") ");
-        echo "<script>document.getElementById('logs').innerHTML = 'You can lesson added succesfuly!'</script>";
+        echo "<script>document.getElementById('logs').innerHTML = 'You added lesson succesfuly!'</script>";
         //email
     }
     else //lector take hour
     {
         data_to_db(connect_mysqli(), "INSERT into timetable(lesson_date, lesson_num, student_id, sides_id) values ('" .$_POST["start_date_f_"]. "', " .$_POST["start_hour_f_"]. ", 0 , " .$_POST["meet_side"]. ")");
-        echo "<script>document.getElementById('logs').innerHTML = 'You can lesson added succesfuly!'</script>";
+        echo "<script>document.getElementById('logs').innerHTML = 'You added lesson succesfuly!'</script>";
     }
 }
 //solve problems finish passed lasson

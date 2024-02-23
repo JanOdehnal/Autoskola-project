@@ -41,10 +41,12 @@ insert into student_course_lec(student_id, course_id, lector_id) values(6, 1, 3)
 insert into timetable(lesson_date, lesson_num, student_id, sides_id) values ('2024-01-24', 2, 1, 4);
 drop table timetable;
 insert into student_course_lec(student_id, lector_id, course_id) value (1, 1, 4);
-SELECT  x.* , y.lector_id from timetable x left join student_course_lec y on x.student_id = y.student_id where x.lesson_date > '2023-01-22' and lector_id=3;
+SELECT count(student_id) from timetable where student_id = 6;
+SELECT  x.* , y.lector_id from timetable x left join student_course_lec y on x.student_id = y.student_id where x.student_id=6;
 SELECT x.* , y.lector_id from timetable x left join student_course_lec y on x.student_id = y.student_id where x.lesson_date > '2024-01-22' and lector_id=1;
 SELECT distinct x.* , y.lector_id, z.* from timetable x left join student_course_lec y on x.student_id = y.student_id left join sides z on x.sides_id = z.id where x.lesson_date >= '2024-02-04' and y.lector_id=3 ORDER BY x.lesson_date, x.lesson_num;
 
+SELECT count(student_id) from timetable where lesson_date = '2024-03-02' and student_id =6;
 
 
 

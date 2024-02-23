@@ -6,15 +6,16 @@
     <title>Document</title>
 </head>
 <body>
-<span class="">
+    
+<span class="menuItem">
 <a href="with_ses.php">Timetable</a>
 </span>
 
-<span class="">
+<span class="menuItem">
 <a href="">Rules</a>
 </span>
 
-<span class="">
+<span class="menuItem">
 <a href="add_person.php">Registry</a>
 </span>
 

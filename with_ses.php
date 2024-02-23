@@ -1,4 +1,5 @@
 <?php
+require_once "navigation.php";
 session_start();
 include_once "connect_mysqli.php";
 $con = connect_mysqli();
