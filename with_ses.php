@@ -24,9 +24,9 @@ if (isset($_SESSION["info"]))
     {
         echo "<script>document.getElementById('hello').innerHTML = 'Hello student ".$_SESSION["info"]["name"]." ".$_SESSION["info"]["surname"]."!'</script>";
         require_once "add_side.php";
-        //require_once "engage_lesson.php";
+        require_once "hours.php";
     }
-    if ($_SESSION["possicion"] == "lector")
+    else if ($_SESSION["possicion"] == "lector")
     {
         if ($_SESSION["info"]["possicion"] == "lector")
         {
@@ -39,10 +39,8 @@ if (isset($_SESSION["info"]))
             echo "<script>document.getElementById('hello').innerHTML = 'Hello admin ".$_SESSION["info"]["name"]." ".$_SESSION["info"]["surname"]."!'</script>";
             require_once "add_side.php";
             require_once "delete_side.php";
-            require_once "add_person.php";
+            require_once "add_person_1.php";
             require_once "add_delete_vehicle.php";
-            //require_once "engage_lesson.php";
-
         }
     }
 }

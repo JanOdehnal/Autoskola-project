@@ -8,6 +8,7 @@ delete from sides where id=2;
 delete from timetable where lesson_num = 4;
 delete from student_course_lec where student_id = 7;
 -- alter table course modify vehicle_type varchar(45) null unique;
+alter table student add column verify_pass int null;
 select * from lector;
 select * from course;
 select * from student;
@@ -17,6 +18,7 @@ select * from timetable;
 select count(id) from lector;
 select count(student_id) from timetable where student_id = 1;
 use drive_sch_db;
+-- alter table student add column status enum('finish', 'start', 'activ') default 'start';
 alter table lector drop visibility;
 alter table sides add column visibility ENUM('true', 'false');
 alter table student add column lesson_num int null;
@@ -47,7 +49,7 @@ SELECT x.* , y.lector_id from timetable x left join student_course_lec y on x.st
 SELECT distinct x.* , y.lector_id, z.* from timetable x left join student_course_lec y on x.student_id = y.student_id left join sides z on x.sides_id = z.id where x.lesson_date >= '2024-02-04' and y.lector_id=3 ORDER BY x.lesson_date, x.lesson_num;
 
 SELECT count(student_id) from timetable where lesson_date = '2024-03-02' and student_id =6;
-
+SELECT * from timetable where student_id = 6;
 
 
 alter table student add column num_veh INT DEFAULT 1;

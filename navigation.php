@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    
+
 <span class="menuItem">
 <a href="with_ses.php">Timetable</a>
 </span>
@@ -16,7 +16,7 @@
 </span>
 
 <span class="menuItem">
-<a href="add_person.php">Registry</a>
+<a href="add_person_1.php">Registry</a>
 </span>
 
 </body>

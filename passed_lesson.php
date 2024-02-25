@@ -9,6 +9,7 @@
         <p id="meet_s"><p>
         <p id="type_car"><p>
         <div id="choose_side" style="visibility:hidden"><!--for student-->
+            <input type="hidden" name="change" id="change" value="">
             <label for="meet_side">Meet side:</label>
             <select name="meet_side" id="meet_side" require>  
 <?php
@@ -61,19 +62,22 @@
         else if (info==2)//delete lesson
         {
             document.getElementById("delete").style.visibility = "visible";
-            document.getElementById("h1_finish").innerHTML = "Delete lesson";
+            document.getElementById("h1_finish").innerHTML = "Delete/replace lesson";
+            document.getElementById("choose_side").style.visibility = "visible";
+            document.getElementById("change").value = "change";
         }
         else if (info==3)//choose lesson
         {
             document.getElementById("choose_side").style.visibility = "visible";
             document.getElementById("h1_finish").innerHTML = "Take lesson";
         }
-        else if (info==4)//chack and delete
+        else if (info==4)//chack, replace and delete 
         {
             document.getElementById("finish_vis").style.visibility = "visible";
             document.getElementById("delete").style.visibility = "visible";
-            document.getElementById("h1_finish").innerHTML = "Check/delete";
-            
+            document.getElementById("choose_side").style.visibility = "visible";
+            document.getElementById("h1_finish").innerHTML = "Check/delete/replace";
+            document.getElementById("change").value = "change";
         }
         document.getElementById("finish_less").style.visibility = "visible";
         document.getElementById("start_date_f").innerHTML =  date;
@@ -99,6 +103,10 @@ if(isset($_POST["start_date_f_"]))
         data_to_db(connect_mysqli(), "DELETE from timetable where lesson_date = '" .$_POST["start_date_f_"]. "' && lesson_num = ".$_POST["start_hour_f_"]);
         echo "<script>document.getElementById('logs').innerHTML = 'You delete lessons!'</script>";
     }
+    if ($_POST["change"]=="change")
+    {
+        data_to_db(connect_mysqli(), "UPDATE timetable set sides_id = " .$_POST["meet_side"]. " where lesson_date = '".$_POST["start_date_f_"]."' and lesson_num = ".$_POST["start_hour_f_"]);
+    }
     else if ($_POST["meet_side"] != null && $_SESSION["possicion"] == "student")// try
     {
         if (array_values(mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT count(student_id) from timetable where lesson_date = '" .$_POST["start_date_f_"]. "' and lesson_num = " .$_POST["start_hour_f_"])))[0] > 0)
@@ -106,7 +114,7 @@ if(isset($_POST["start_date_f_"]))
             echo "<script>document.getElementById('logs').innerHTML = 'Someone was faster!'</script>";
             return 0;
         }
-        if (array_values(mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT count(student_id) from timetable where student_id = " .$_SESSION["info"]["id"])))[0] >= $_SESSION["info"]["lesson_num"])
+        if (array_values(mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT count(student_id) from timetable where student_id = " .$_SESSION["info"]["id"])))[0] > $_SESSION["info"]["lesson_num"])
         {
             echo "<script>document.getElementById('logs').innerHTML = 'You pass all your hours!'</script>";
             return 0;

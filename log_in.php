@@ -90,7 +90,7 @@ if (isset($_POST["email_l"]))
             echo "<script>document.getElementById('logs').innerHTML = 'You are already logged in!'</script>";
             return 0;
         }
-        else if ($row["verify_student"] == $_POST["password_ver"])
+        else if ($row["verify_pass"] == $_POST["password_ver"])
         {
             $_SESSION["possicion"] = "student";
             $_SESSION["info"] = $row;
@@ -108,7 +108,7 @@ if (isset($_POST["email_l"]))
                 echo "<script>document.getElementById('logs').innerHTML = 'You are already logged in!'</script>";
                 return 0;
             }
-            else if ($row["verify_lector"] == $_POST["password_ver"])
+            else if ($row["verify_pass"] == $_POST["password_ver"])
             {
                 $_SESSION["possicion"] = "lector";
                 $_SESSION["info"] = $row;

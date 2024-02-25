@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS drive_sch_db.lector ( -- prefer vehicle???
   surname VARCHAR(45) NULL,
   email VARCHAR(45) NULL UNIQUE,
   password VARCHAR(45) NULL,
-  verify_lector VARCHAR(45) NULL,
+  verify_pass INT NULL,
   phone_number VARCHAR(12) NULL, -- for foreins, int(12) is imposible
   possicion ENUM('lector', 'admin') NULL,
   prefer_veh INT NULL, -- if lector specialized on some type of vehicle
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS drive_sch_db.student (
   surname VARCHAR(45) NULL,
   email VARCHAR(45) NULL UNIQUE,
   password VARCHAR(45) NULL,
-  verify_student VARCHAR(45) NULL,
+  verify_pass INT NULL,
   phone_number VARCHAR(12) NULL, -- for foreins, int(12) is imposible
   lesson_num INT NULL,
   num_veh INT DEFAULT 1,

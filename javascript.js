@@ -46,3 +46,24 @@ function add_hours(num)
 {
     document.getElementById("hour_num").value = num;
 }
+
+function reg(pos, id)
+{
+    document.getElementById("add_person_2").style.visibility = "visible";
+    document.getElementById("add_person_1").style.visibility = "hidden";
+    document.getElementById("reg_").value = id;
+    console.log(id+"ok");
+    console.log(pos);
+    if (pos == 'student')
+    {
+        document.getElementById("reg").value = "student";
+        change_visibility('if_student', true);
+        change_visibility('active_lec', false);
+    }
+    else
+    {
+        document.getElementById("reg").value = "lector";
+        change_visibility('active_lec', true);
+        change_visibility('if_student', false);
+    }
+}

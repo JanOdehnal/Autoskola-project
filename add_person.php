@@ -1,3 +1,14 @@
+<?php
+require_once "navigation.php";
+require_once "connect_mysqli.php";
+$con = connect_mysqli()
+
+
+
+
+
+?>
+<script src="javascript.js"></script>
 <html>
     <div id="add_person_form">
         <h1>Add new person</h1>
@@ -20,6 +31,7 @@
             <input id="email" type="email" name="email" required/>
             <br/>
             <label for="tel">*Telephone: +</label>
+            <div >
             <input id="tel" type="tel" value="420" name="phone_number" pattern="[0-9]{12}" required/>
             <br/>
             *In what vehicle will student drive? / Lector prefer:<br>
