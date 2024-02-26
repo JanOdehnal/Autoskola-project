@@ -54,7 +54,7 @@ if (isset($_POST["email_s"]))
         $_SESSION["possicion"] = "lector";
         $row = mysqli_fetch_assoc($sql_row);
     }
-    if ($row)
+    if ($row!=null)
     {
         if ($_POST["password_s"] == $row["password"])
         {

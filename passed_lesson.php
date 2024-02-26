@@ -53,6 +53,7 @@
 <script>
     function check_lesson(pos_hour, date, lector, side, info)
     {
+        document.getElementById("change").value = "";
         if (info==0);//info
         else if (info==1)//chack lesson
         {
@@ -116,6 +117,7 @@ if(isset($_POST["start_date_f_"]))
         }
         if (array_values(mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT count(student_id) from timetable where student_id = " .$_SESSION["info"]["id"])))[0] > $_SESSION["info"]["lesson_num"])
         {
+            echo array_values(mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT count(student_id) from timetable where student_id = " .$_SESSION["info"]["id"])))[0];
             echo "<script>document.getElementById('logs').innerHTML = 'You pass all your hours!'</script>";
             return 0;
         }
@@ -131,7 +133,7 @@ if(isset($_POST["start_date_f_"]))
     }
     else //lector take hour
     {
-        data_to_db(connect_mysqli(), "INSERT into timetable(lesson_date, lesson_num, student_id, sides_id) values ('" .$_POST["start_date_f_"]. "', " .$_POST["start_hour_f_"]. ", 0 , " .$_POST["meet_side"]. ")");
+        data_to_db(connect_mysqli(), "INSERT into timetable(lesson_date, lesson_num, student_id, sides_id) values ('" .$_POST["start_date_f_"]. "', " .$_POST["start_hour_f_"]. ", 1 , " .$_POST["meet_side"]. ")");
         echo "<script>document.getElementById('logs').innerHTML = 'You added lesson succesfuly!'</script>";
     }
 }

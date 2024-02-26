@@ -39,6 +39,7 @@ require_once "connect_mysqli.php";
 <?php
 $con=connect_mysqli();
 if (isset($_SESSION["possicion"]) && $_SESSION["possicion"]=="lector" && $_SESSION["info"]["possicion"] == "admin") require_once "add_person_2.php";
+else echo "!!!!!!!!!!!!!!!!!!!!!!!". $_SESSION["info"]["possicion"].'?????';
 if (isset($_POST["posicion"]))
 {
     if (mysqli_fetch_assoc(mysqli_query($con, "SELECT * from lector where email = '".$_POST["email"]."'")))

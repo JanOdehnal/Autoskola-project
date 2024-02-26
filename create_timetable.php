@@ -61,11 +61,9 @@ function create_table($lector_row, $my_timetable)
     $last_Mo = get_last_Monday();
 
     $sql="SELECT  distinct x.* , y.lector_id, z.* from timetable x left join student_course_lec y on x.student_id = y.student_id left join sides z on x.sides_id = z.id where x.lesson_date >= '".date("Y-m-d", get_last_Monday())."' and y.lector_id=" .$lector_row["id"]. " ORDER BY x.lesson_date, x.lesson_num;";
-    //echo $sql;
     $sql_stat = mysqli_query(connect_mysqli(), $sql);
     $no_records = false;
     if (!$row_t = mysqli_fetch_assoc($sql_stat)) $no_records = true; 
-
     for ($h=0; $h < $my_timetable->get_weeks();$h++) // num of weeks
     {
         $plas_week=7*24*3600*$h;
@@ -87,14 +85,14 @@ function create_table($lector_row, $my_timetable)
                 if ($j == 0) $table=$table."<td class='else'>".date("d.m.Y", $tmp).", ".get_day($tmp)."</td>";//1st col date...
                 else if (!$no_records && $row_t["lesson_date"] == date("Y-m-d", $tmp) && $row_t["lesson_num"] == $j)
                 {
-                    if ($row_t["student_id"] == 0)
+                    if ($row_t["student_id"] == 1)
                     {
-                        if (isset($_SESSION["info"]))
+                        if (isset($_SESSION["info"]) && $_SESSION["possicion"]!="student")
                         {
-                            if ($_SESSION["info"]["possicion"]=="admin") $table=$table."<td onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 2)\" class='taken'>info</td>";
-                            if ($_SESSION["info"]["possicion"]=="lector") $table=$table."<td  onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 1)\" class='taken'>info</td>";
+                            if (/*isset($_SESSION['possicion']) && $_SESSION['possicion'] == "lector" &&*/ $_SESSION["info"]["possicion"]=="admin") $table=$table."<td onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 4)\" class='taken'>info</td>";
+                            if (/*isset($_SESSION['possicion']) && $_SESSION['possicion'] == "lector" &&*/ $_SESSION["info"]["possicion"]=="lector") $table=$table."<td onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 1)\" class='taken'>info</td>";
                         }
-                        else $table=$table."<td>driving school</td>";
+                        else $table=$table."<td class='taken'>driving school</td>";
                     }
                     else if (isset($_SESSION["possicion"]))
                     {

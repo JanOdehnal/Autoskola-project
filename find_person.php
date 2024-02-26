@@ -18,6 +18,7 @@ foreach (array_values($sql_field) as $sql_and)
         $filter=$filter."<tr>";
         foreach (array_values($row) as $cell)
         {
+            //if ($sql_and == "student" && $cell == 1) break;
             $filter=$filter."<td>".$cell."</td>";
         }
         $filter=$filter."</tr>";

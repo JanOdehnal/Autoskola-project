@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS drive_sch_db.student (
   phone_number VARCHAR(12) NULL, -- for foreins, int(12) is imposible
   lesson_num INT NULL,
   num_veh INT DEFAULT 1,
+  status ENUM('learening', 'finish') default 'learening',
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 
@@ -59,7 +60,7 @@ CREATE TABLE IF NOT EXISTS drive_sch_db.sides (
   street VARCHAR(45) NULL,
   GPS_coordinate VARCHAR(45) NULL UNIQUE,
   more_info VARCHAR(45) NULL,
-  visibility ENUM('true', 'false'),
+  visibility ENUM('true', 'false') default 'true',
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 
@@ -104,6 +105,8 @@ CREATE TABLE IF NOT EXISTS drive_sch_db.timetable (
   FOREIGN KEY (sides_id) REFERENCES sides(id))
 ENGINE = InnoDB;
 
+insert into lector (name, surname, email, password, possicion) values('Admin', 'Admin', 'admin@admin', 1234, 'admin');
+insert into student (name, surname, email, password) values('Student', 'Student', 'student@student', 123);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
