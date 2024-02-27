@@ -10,7 +10,11 @@ if (!(isset($_SESSION["possicion"]) && $_SESSION["possicion"]=="lector" && $_SES
 require_once "connect_mysqli.php";
 ?>
 <html>
-    <div id="add_person_1">
+    <?php
+        if (isset($_SESSION["possicion"]) && $_SESSION["possicion"]=="lector" && $_SESSION["info"]["possicion"] == "admin") echo "<div id=\"add_person_1_\" class=\"jump_div\">";
+        else echo "<div id=\"add_person_1\">";
+    ?>
+    <!--<div id="add_person_1">-->
         <h1>Add new person</h1>
         <form method="POST">
             *Choode who it is:<br>
@@ -33,13 +37,15 @@ require_once "connect_mysqli.php";
             <br>
             <input type="submit" value="registry">
         </form>
+        <?php
+        if (isset($_SESSION["possicion"]) && $_SESSION["possicion"]=="lector" && $_SESSION["info"]["possicion"] == "admin") echo "<button onclick=\"change_visibility('add_person_1_')\">Back</button>";
+    ?>
     </div>        
 </html>
 
 <?php
 $con=connect_mysqli();
 if (isset($_SESSION["possicion"]) && $_SESSION["possicion"]=="lector" && $_SESSION["info"]["possicion"] == "admin") require_once "add_person_2.php";
-else echo "!!!!!!!!!!!!!!!!!!!!!!!". $_SESSION["info"]["possicion"].'?????';
 if (isset($_POST["posicion"]))
 {
     if (mysqli_fetch_assoc(mysqli_query($con, "SELECT * from lector where email = '".$_POST["email"]."'")))

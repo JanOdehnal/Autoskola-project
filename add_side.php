@@ -4,7 +4,7 @@ $con = connect_mysqli();
 ?>
 
 <html>
-    <div id="add_side" style="visibility: visible;">
+    <div id="add_side" class="jump_div">
         <h1>Add side</h1>
         <form method="post">
             <label for="town">Town name:</label>
@@ -21,6 +21,7 @@ $con = connect_mysqli();
             <br>
             <input type="submit" value="Send">
         </form>
+        <button onclick="change_visibility('add_side', false)">Back</button>
     </div>
 </html>
 

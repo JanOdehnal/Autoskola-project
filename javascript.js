@@ -28,8 +28,6 @@ function engage_less(lector, pos_hour, date, back)
     {
         document.getElementById("h1_eng").innerHTML = "Sign off lesson";
         document.getElementById("sign_off").value = back;
-
-
     }
     document.getElementById("meet_add").style.visibility = "visible";
     document.getElementById("start_date").innerHTML =  date;
@@ -50,10 +48,8 @@ function add_hours(num)
 function reg(pos, id)
 {
     document.getElementById("add_person_2").style.visibility = "visible";
-    document.getElementById("add_person_1").style.visibility = "hidden";
+    document.getElementById("add_person_1_").style.visibility = "hidden";
     document.getElementById("reg_").value = id;
-    console.log(id+"ok");
-    console.log(pos);
     if (pos == 'student')
     {
         document.getElementById("reg").value = "student";

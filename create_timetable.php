@@ -60,10 +60,16 @@ function create_table($lector_row, $my_timetable)
     $tmp=0;//use with sec - day
     $last_Mo = get_last_Monday();
 
-    $sql="SELECT  distinct x.* , y.lector_id, z.* from timetable x left join student_course_lec y on x.student_id = y.student_id left join sides z on x.sides_id = z.id where x.lesson_date >= '".date("Y-m-d", get_last_Monday())."' and y.lector_id=" .$lector_row["id"]. " ORDER BY x.lesson_date, x.lesson_num;";
+    //$sql="SELECT  distinct x.* , y.lector_id, z.* from timetable x left join student_course_lec y on x.student_id = y.student_id left join sides z on x.sides_id = z.id where x.lesson_date >= '".date("Y-m-d", get_last_Monday())."' and (y.lector_id=" .$lector_row["id"]. " or teacher_id=" .$lector_row["id"]. ") ORDER BY x.lesson_date, x.lesson_num;";
+
+    $sql="SELECT  distinct x.* , y.lector_id, z.* from timetable x left join student_course_lec y on x.student_id = y.student_id left join sides z on x.sides_id = z.id where x.lesson_date >= '".date("Y-m-d", get_last_Monday())."' and  teacher_id=" .$lector_row["id"]. " ORDER BY x.lesson_date, x.lesson_num;";
     $sql_stat = mysqli_query(connect_mysqli(), $sql);
     $no_records = false;
-    if (!$row_t = mysqli_fetch_assoc($sql_stat)) $no_records = true; 
+    if (!$row_t = mysqli_fetch_assoc($sql_stat))
+    {
+        $no_records = true;
+        echo "NO RECORDS";
+    }
     for ($h=0; $h < $my_timetable->get_weeks();$h++) // num of weeks
     {
         $plas_week=7*24*3600*$h;
@@ -89,8 +95,8 @@ function create_table($lector_row, $my_timetable)
                     {
                         if (isset($_SESSION["info"]) && $_SESSION["possicion"]!="student")
                         {
-                            if (/*isset($_SESSION['possicion']) && $_SESSION['possicion'] == "lector" &&*/ $_SESSION["info"]["possicion"]=="admin") $table=$table."<td onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 4)\" class='taken'>info</td>";
-                            if (/*isset($_SESSION['possicion']) && $_SESSION['possicion'] == "lector" &&*/ $_SESSION["info"]["possicion"]=="lector") $table=$table."<td onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 1)\" class='taken'>info</td>";
+                            if ($_SESSION["info"]["possicion"]=="admin") $table=$table."<td onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 4)\" class='taken'>info</td>";
+                            else if ($_SESSION["info"]["possicion"]=="lector") $table=$table."<td onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 1)\" class='taken'>info</td>";
                         }
                         else $table=$table."<td class='taken'>driving school</td>";
                     }
@@ -151,11 +157,12 @@ while ($row = mysqli_fetch_assoc($tmp_stat))
     if ($row["active_lec"]=="activ") 
     {
         if (!isset($_SESSION["info"])) create_table($row, $my_timetable);
-        else if ($_SESSION["possicion"] == "student") create_table($row, $my_timetable);
-        else if ($_SESSION["info"]["possicion"] == "admin") create_table($row, $my_timetable);
-        else if ($_SESSION["info"]["possicion"] == "lector" && $_SESSION["info"]["id"] == $row["id"]) create_table($row, $my_timetable);
+        else if ($_SESSION["possicion"] == "student" && $_SESSION["info"]["lector_id"]==$row["id"]) create_table($row, $my_timetable);
+        else if ($_SESSION["possicion"] == "lector" && $_SESSION["info"]["possicion"] == "admin") create_table($row, $my_timetable);
+        else if ($_SESSION["possicion"] == "lector" && $_SESSION["info"]["possicion"] == "lector"/* && $_SESSION["info"]["id"] == $row["id"]*/) create_table($row, $my_timetable);
         //student
     }
+    //else if ()
 }
 
 

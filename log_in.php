@@ -44,7 +44,7 @@
 <?php
 if (isset($_POST["email_s"]))
 {
-    $sql = "SELECT * from student where email = '".$_POST["email_s"]."'";
+    $sql = "SELECT x.*, y.* from student x left join student_course_lec y on x.id = y.student_id where email = '".$_POST["email_s"]."'";
     $sql_row = mysqli_query($con, $sql);
     $_SESSION["possicion"] = "student";
     if (!$row = mysqli_fetch_assoc($sql_row))
@@ -81,7 +81,7 @@ if (isset($_POST["email_l"]))
         echo "<script>document.getElementById('logs').innerHTML = 'You write not write passwords same!'</script>";
         return 0;
     }
-    $sql = "SELECT * from student where email = '".$_POST["email_l"]."'";
+    $sql = "SELECT x.*, y.* from student x left join student_course_lec y on x.id = y.student_id = '".$_POST["email_l"]."'";
     $sql_row = mysqli_query($con, $sql);
     if ($row = mysqli_fetch_assoc($sql_row))
     {

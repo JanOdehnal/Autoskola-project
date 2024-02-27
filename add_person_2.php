@@ -3,7 +3,7 @@
 
 <!--after find person-->
 <html>
-    <div id="add_person_2" style="visibility:hidden">
+    <div id="add_person_2" class="jump_div_super">
         <h1>Add new person</h1>
         <form method="POST">
             <input type="hidden" id="reg" name="reg" value="">
@@ -57,6 +57,7 @@ $stmt->close();
 </div>
 <input type="submit" value="Registry person">
 </form>
+<button onclick="change_visibility('add_person_2', false), change_visibility('if_student', false), change_visibility('active_lec', false)">Back</button>
 </div>
 </html>
 
@@ -69,6 +70,7 @@ if (isset($_POST["reg"]))
         // add record to student_course_lec
         if ($_POST["type_veh"] == null) echo "<script>document.getElementById('logs').innerHTML = 'You forgot write vehicle type!'</script>";
         else if ($_POST["choose_lec"] == null) echo "<script>document.getElementById('logs').innerHTML = 'You forgot choose lector!'</script>";
+        //else if (array_values(mysqli_fetch_assoc(mysqli_query($con, "SELECT count() from student_course_lec where student_id= ".$_POST["reg_"])))[0]!=0) echo "<script>document.getElementById('logs').innerHTML = 'Student can have 1 course'</script>";
         else 
         {
             data_to_db($con, "UPDATE student set verify_pass = ".rand(100000,999999).", lesson_num = ".$_POST["hour_num"]." where id = ".$_POST["reg_"]);

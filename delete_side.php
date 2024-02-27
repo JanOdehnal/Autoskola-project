@@ -1,5 +1,5 @@
 <html>
-    <div id="del_side" style="visibility: visible;">
+    <div id="del_side" class="jump_div">
         <h1>Delete side</h1>
         <form method="post">
             <label for="mod_side">Delete side: </label>
@@ -19,6 +19,7 @@
             <br>
             <input type="submit" value="Delete side">
         </form>
+        <button onclick="change_visibility('del_side', false)">Back</button>
     </div>
 </html>
 <?php

@@ -1,18 +1,20 @@
 <html>
-    <div id="add_veh" style="visibility: visible;">
+    <div id="add_veh" class="jump_div">
         <h1>Add vehicle</h1>
         <form method="post">
-            <label for="veh_name">*Vehicle name:</label>
-            <input id="veh_name" type="text" name="veh_name" required/>
+            <label for="vehic_name">*Vehicle name:</label>
+            <input id="vehic_name" type="text" name="vehic_name" required/>
             <br>
-            <label for="num_less">*Number of compursory lessons:</label>
-            <input id="num_less" type="number" name="num_less" min="0" required>
+            <label for="num_less_">*Number of compursory lessons:</label>
+            <input id="num_less_" type="number" name="num_less_" min="0" required>
             <br>
             <input type="submit" value="Add vehicle">
+            <br>
+        <button onclick="change_visibility('add_veh', false)">Back</button>
         </form>
     </div>
 
-    <div id="del_veh" style="visibility: visible;">
+    <div id="del_veh" class="jump_div">
         <h1>Delete vehicle</h1>
         <form method="post">
             <label for="del_vehicle">Delete vehicle: </label>
@@ -29,18 +31,20 @@
             $stmt->close();
         }
     ?>
-            </select><br>
+            </select>
+            <br>
             <input type="submit" value="Delete vehicle">
         </form>
+        <button onclick="change_visibility('del_veh', false)">Back</button>
     </div>
 </html>
 
 
 
 <?php
-if (isset($_POST["veh_name"])) //add vehicle
+if (isset($_POST["vehic_name"])) //add vehicle
 {
-    data_to_db($con, "insert into course(vehicle_type, num_of_less) values ('" .$_POST["veh_name"]. "', " .$_POST["num_less"].")");
+    data_to_db($con, "insert into course(vehicle_type, num_of_less, visibility) values ('" .$_POST["vehic_name"]. "', " .$_POST["num_less_"].", 'true')");
 }
 
 if (isset($_POST["del_vehicle"])) //delete vehicle

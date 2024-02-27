@@ -25,6 +25,18 @@ div.jump_div {
     border: 1px solid black;
 }
 
+div.jump_div_super{
+    position: fixed;
+    top:  50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 15;
+    background-color: rgb(204, 154, 250);
+    visibility: hidden;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
 div#log_sign
 {
     position: absolute;

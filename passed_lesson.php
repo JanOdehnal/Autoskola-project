@@ -6,6 +6,7 @@
         <input type="hidden" id="start_date_f_" name="start_date_f_">
         time:<p id="start_hour_f"></p>
         <input type="hidden" id="start_hour_f_" name="start_hour_f_">
+        <input type="hidden" id="lec_id_s" name="lec_id_s" value="">
         <p id="meet_s"><p>
         <p id="type_car"><p>
         <div id="choose_side" style="visibility:hidden"><!--for student-->
@@ -20,6 +21,7 @@
         while ($stmt->fetch()) {
             echo '<option value="' . $id . '">' .$town. ', ' .$street. ', ' .$GPS_coordinate. ', ' .$more_info. '</option>';
         }
+        echo '<option onclick="">add side</option>';
         $stmt->close();
     }
 ?>
@@ -54,6 +56,7 @@
     function check_lesson(pos_hour, date, lector, side, info)
     {
         document.getElementById("change").value = "";
+        document.getElementById("lec_id_s").value = lector;
         if (info==0);//info
         else if (info==1)//chack lesson
         {
@@ -71,6 +74,7 @@
         {
             document.getElementById("choose_side").style.visibility = "visible";
             document.getElementById("h1_finish").innerHTML = "Take lesson";
+            //document.getElementById("lec_id_s").value = lector;
         }
         else if (info==4)//chack, replace and delete 
         {
@@ -79,6 +83,8 @@
             document.getElementById("choose_side").style.visibility = "visible";
             document.getElementById("h1_finish").innerHTML = "Check/delete/replace";
             document.getElementById("change").value = "change";
+
+
         }
         document.getElementById("finish_less").style.visibility = "visible";
         document.getElementById("start_date_f").innerHTML =  date;
@@ -127,13 +133,13 @@ if(isset($_POST["start_date_f_"]))
             echo "<script>document.getElementById('logs').innerHTML = 'You can have only 1 lesson in day!'</script>";
             return 0;
         }
-        data_to_db(connect_mysqli(), "INSERT into timetable(lesson_date, lesson_num, student_id, sides_id) values ('" .$_POST["start_date_f_"]. "', " .$_POST["start_hour_f_"]. ", " .$_SESSION["info"]["id"]. ", " .$_POST["meet_side"]. ") ");
+        data_to_db(connect_mysqli(), "INSERT into timetable(lesson_date, lesson_num, student_id, sides_id, teacher_id) values ('" .$_POST["start_date_f_"]. "', " .$_POST["start_hour_f_"]. ", " .$_SESSION["info"]["id"]. ", " .$_POST["meet_side"]. ", ".$_POST["lec_id_s"].")");
         echo "<script>document.getElementById('logs').innerHTML = 'You added lesson succesfuly!'</script>";
         //email
     }
     else //lector take hour
     {
-        data_to_db(connect_mysqli(), "INSERT into timetable(lesson_date, lesson_num, student_id, sides_id) values ('" .$_POST["start_date_f_"]. "', " .$_POST["start_hour_f_"]. ", 1 , " .$_POST["meet_side"]. ")");
+        data_to_db(connect_mysqli(), "INSERT into timetable(lesson_date, lesson_num, student_id, sides_id, teacher_id) values ('" .$_POST["start_date_f_"]. "', " .$_POST["start_hour_f_"]. ", 1 , " .$_POST["meet_side"]. ", ".$_POST["lec_id_s"].")");
         echo "<script>document.getElementById('logs').innerHTML = 'You added lesson succesfuly!'</script>";
     }
 }

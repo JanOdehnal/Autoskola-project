@@ -1,5 +1,5 @@
 <html>
-<h1 onclick="change_visibility('hours')">wiev your hours</h1>
+<!--<h1 onclick="change_visibility('hours')">wiev your hours</h1>-->
 <div class="jump_div" id="hours">
     <table>
         <tr>
@@ -25,15 +25,5 @@ while ($row = mysqli_fetch_assoc($sql_stat))
 }
 $les_tab = $les_tab."</table>number of all hours : ".$count."<br><button onclick=\"change_visibility('hours')\">hide</button></div>";
 echo $les_tab;
-
-
-
-
-
-
-
-
-
-
 
 ?>
