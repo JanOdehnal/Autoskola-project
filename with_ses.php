@@ -2,6 +2,7 @@
 require_once "navigation.php";
 session_start();
 include_once "connect_mysqli.php";
+include_once "connect_PHPmailer.php";
 $con = connect_mysqli();
 ?>
 <script src="javascript.js"></script>

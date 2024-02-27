@@ -98,21 +98,18 @@
 </script>
 
 <?php
-
 if(isset($_POST["start_date_f_"]))
 {  
     if (isset($_POST["del"]) && $_POST["del"] == "del")
     {
-        /*if (isset($_SESSION["possicion"]) && $_SESSION["possicion"] == "admin" && mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT student_id from timetable where lesson_date =".$_POST["start_hour_f_"]." and lesson_num = ".$_POST["start_hour_f_"])) != 0) //if admin delete student //
-        {
-            ;//TODO//email
-        }*/
         data_to_db(connect_mysqli(), "DELETE from timetable where lesson_date = '" .$_POST["start_date_f_"]. "' && lesson_num = ".$_POST["start_hour_f_"]);
         echo "<script>document.getElementById('logs').innerHTML = 'You delete lessons!'</script>";
     }
     if ($_POST["change"]=="change")
     {
         data_to_db(connect_mysqli(), "UPDATE timetable set sides_id = " .$_POST["meet_side"]. " where lesson_date = '".$_POST["start_date_f_"]."' and lesson_num = ".$_POST["start_hour_f_"]);
+        $row=mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT x.*, y.email from timetable x left join student y on x.student_id = y.id where lesson_date = '".$_POST["start_date_f_"]."' and lesson_num = ".$_POST["start_hour_f_"]));
+        send_email($row["email"], "Místo nastupu bylo změněno! Podívej se na rozvh!");
     }
     else if ($_POST["meet_side"] != null && $_SESSION["possicion"] == "student")// try
     {
@@ -135,7 +132,7 @@ if(isset($_POST["start_date_f_"]))
         }
         data_to_db(connect_mysqli(), "INSERT into timetable(lesson_date, lesson_num, student_id, sides_id, teacher_id) values ('" .$_POST["start_date_f_"]. "', " .$_POST["start_hour_f_"]. ", " .$_SESSION["info"]["id"]. ", " .$_POST["meet_side"]. ", ".$_POST["lec_id_s"].")");
         echo "<script>document.getElementById('logs').innerHTML = 'You added lesson succesfuly!'</script>";
-        //email
+        send_email($_SESSION["info"]["email"], "Přihlasili jste se na hodinu!".$_POST["start_date_f_"]);
     }
     else //lector take hour
     {

@@ -1,7 +1,3 @@
-
-
-
-<!--after find person-->
 <html>
     <div id="add_person_2" class="jump_div_super">
         <h1>Add new person</h1>
@@ -73,8 +69,11 @@ if (isset($_POST["reg"]))
         //else if (array_values(mysqli_fetch_assoc(mysqli_query($con, "SELECT count() from student_course_lec where student_id= ".$_POST["reg_"])))[0]!=0) echo "<script>document.getElementById('logs').innerHTML = 'Student can have 1 course'</script>";
         else 
         {
-            data_to_db($con, "UPDATE student set verify_pass = ".rand(100000,999999).", lesson_num = ".$_POST["hour_num"]." where id = ".$_POST["reg_"]);
+            $password = rand(100000,999999);
+            data_to_db($con, "UPDATE student set verify_pass = ".$password.", lesson_num = ".$_POST["hour_num"]." where id = ".$_POST["reg_"]);
             data_to_db($con, "INSERT into student_course_lec(student_id, course_id, lector_id) values('" .$_POST["reg_"]. "','" .$_POST["type_veh"]. "','" .$_POST["choose_lec"]. "')");
+            if($row = mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT email from student where id = ".$_POST["reg_"])));
+            send_email($row["email"], "Při registraci zadejte heslo: ".$password.".");
         }
     }
     else
@@ -84,10 +83,14 @@ if (isset($_POST["reg"]))
             echo "<script>document.getElementById('logs').innerHTML = 'You forgot write if he is active or passiv!'</script>";
             return 0;
         }
-        else data_to_db($con, "UPDATE lector set verify_pass = ".rand(100000,999999).", possicion = '".$_POST["pos2"]."', active_lec = '".$_POST["if_activ"]."' where id = ".$_POST["reg_"]);
+        else
+        {
+            //hash!!!!
+            $password = rand(100000,999999);
+            data_to_db($con, "UPDATE lector set verify_pass = ".rand(100000,999999).", possicion = '".$_POST["pos2"]."', active_lec = '".$_POST["if_activ"]."' where id = ".$_POST["reg_"]);
+            $row=mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT email from lector where = ".$_POST["reg_"]));
+            send_email($row["email"], "Při registraci zadejte heslo: ".$password.".");
+        }
     }
-    //mail("ode2@seznam.cz", "You were log in in driving school", "You were log in in driving school. Your verifycation code is: " .rand(100000, 999999). ".");
-    // last if delte if
-    //send email with verificational password // current net working
 }
 ?>

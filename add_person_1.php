@@ -5,8 +5,6 @@ if (!(isset($_SESSION["possicion"]) && $_SESSION["possicion"]=="lector" && $_SES
     require_once "navigation.php";
 }
 
-
-
 require_once "connect_mysqli.php";
 ?>
 <html>
@@ -45,6 +43,7 @@ require_once "connect_mysqli.php";
 
 <?php
 $con=connect_mysqli();
+include_once "connect_PHPmailer.php";
 if (isset($_SESSION["possicion"]) && $_SESSION["possicion"]=="lector" && $_SESSION["info"]["possicion"] == "admin") require_once "add_person_2.php";
 if (isset($_POST["posicion"]))
 {
@@ -59,7 +58,7 @@ if (isset($_POST["posicion"]))
         return 0;
     }
     data_to_db($con,"INSERT into ".$_POST["posicion"]."(name, surname, email, phone_number) values('" .$_POST["name"]. "','" .$_POST["surname"]. "','" .$_POST["email"]. "','" .$_POST["phone_number"]. "')");
-    //send email
+    send_email($_POST["email"], "Jste přihlášeni do Autoskoly!");
     if (isset($_SESSION["possicion"]) && $_SESSION["possicion"]=="lector" && $_SESSION["info"]["possicion"] == "admin") echo "<script>window.onload(reg('".$_POST["posicion"]."', ".$con->insert_id."))</script>";
 }
 ?>
