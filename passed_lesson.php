@@ -68,7 +68,7 @@
             document.getElementById("delete").style.visibility = "visible";
             document.getElementById("h1_finish").innerHTML = "Delete/replace lesson";
             document.getElementById("choose_side").style.visibility = "visible";
-            document.getElementById("change").value = "change";
+            //document.getElementById("change").value = "change";
         }
         else if (info==3)//choose lesson
         {
@@ -102,14 +102,16 @@ if(isset($_POST["start_date_f_"]))
 {  
     if (isset($_POST["del"]) && $_POST["del"] == "del")
     {
+        if($row = mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT x.*, y.* from timetable x left join student y on x.student_id = y.id where lesson_date = '".$_POST["start_date_f_"]."' and x.lesson_num = ".$_POST["start_hour_f_"])));
+        send_email($row["email"], "Hodina zrušena! Podívej se na rozvh!");
         data_to_db(connect_mysqli(), "DELETE from timetable where lesson_date = '" .$_POST["start_date_f_"]. "' && lesson_num = ".$_POST["start_hour_f_"]);
         echo "<script>document.getElementById('logs').innerHTML = 'You delete lessons!'</script>";
     }
-    if ($_POST["change"]=="change")
+    else if ($_POST["change"]=="change")
     {
         data_to_db(connect_mysqli(), "UPDATE timetable set sides_id = " .$_POST["meet_side"]. " where lesson_date = '".$_POST["start_date_f_"]."' and lesson_num = ".$_POST["start_hour_f_"]);
-        $row=mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT x.*, y.email from timetable x left join student y on x.student_id = y.id where lesson_date = '".$_POST["start_date_f_"]."' and lesson_num = ".$_POST["start_hour_f_"]));
-        send_email($row["email"], "Místo nastupu bylo změněno! Podívej se na rozvh!");
+        if($row = mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT x.*, y.* from timetable x left join student y on x.student_id = y.id where lesson_date = '".$_POST["start_date_f_"]."' and x.lesson_num = ".$_POST["start_hour_f_"])));
+        send_email($row["email"], "Místo nástupu bylo změněno! Podívej se na rozvh!");
     }
     else if ($_POST["meet_side"] != null && $_SESSION["possicion"] == "student")// try
     {
