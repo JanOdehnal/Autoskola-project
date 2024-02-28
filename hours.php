@@ -3,9 +3,9 @@
 <div class="jump_div" id="hours">
     <table>
         <tr>
-            <td>date</td>
-            <td>lesson</td>
-            <td>lesson finish</td>
+            <td>Datum</td>
+            <td>Hodina</td>
+            <td>Dokončena?</td>
         </tr>
 </html>
 <?php
@@ -23,7 +23,7 @@ while ($row = mysqli_fetch_assoc($sql_stat))
     }
     $les_tab = $les_tab."</tr>";
 }
-$les_tab = $les_tab."</table>number of all hours : ".$count."<br><button onclick=\"change_visibility('hours')\">hide</button></div>";
+$les_tab = $les_tab."</table>number of all hours : ".$count."<br><button onclick=\"change_visibility('hours')\">Schovat!</button></div>";
 echo $les_tab;
 
 ?>

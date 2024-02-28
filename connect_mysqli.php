@@ -10,7 +10,7 @@ function connect_mysqli()
     $dbname="drive_sch_db";
     
     $con = new mysqli($host, $user, $password, $dbname, $port, $socket)
-        or die ('Could not connect to the database server' . mysqli_connect_error());
+        or die ('Chyba v připojiní sercru!' . mysqli_connect_error());
     return $con;
 }
 
@@ -18,7 +18,7 @@ function data_to_db($con, $sql)
 {
     if (mysqli_query($con, $sql))
     {
-        echo '<script>alert("New record proccesed successfully.'.$sql.'")</script>';
+        return 0;//echo '<script>alert("New record proccesed successfully.'.$sql.'")</script>';
     }
     else echo '<script>alert("Error: ' .$sql. '\n' . mysqli_error($con). '")</script>';
 }     

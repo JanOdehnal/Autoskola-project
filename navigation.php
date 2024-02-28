@@ -8,15 +8,15 @@
 <body>
 
 <span class="menuItem">
-<a href="with_ses.php">Timetable</a>
+<a href="with_ses.php">Rozvrh</a>
 </span>
 
 <span class="menuItem">
-<a href="">Rules</a>
+<a href="">Pravidla</a>
 </span>
 
 <span class="menuItem">
-<a href="add_person_1.php">Registry</a>
+<a href="add_person_1.php">Registrace</a>
 </span>
 
 </body>

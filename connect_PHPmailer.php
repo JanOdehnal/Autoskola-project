@@ -58,10 +58,11 @@ function send_email($name, $msg)
     $mail->Body = $msg;
     try{
         $mail->Send();
-        echo "Success!";
+        echo "<script>document.getElementById('logs').innerHTML = 'Uspěšně odeslano!'</script>";
     } catch(Exception $e){
         //Something went bad
-        echo "Fail - " . $mail->ErrorInfo;
+        echo "<script>document.getElementById('logs').innerHTML = 'Chyba - " . $mail->ErrorInfo."'</script>";
+
     }
 }
 //send_email("jan.odehnal@gym-tisnov.cz", "Ahoj");

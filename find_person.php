@@ -1,22 +1,19 @@
 <html>
 <div id="find_person" class="jump_div">
-    <h2>Find person</h2>
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>-->
+    <h2>Najdi osobu</h2>
     <script src="jquerry.js"></script>
-    <label for="myInput">Search:</label>
-    <input class="form-control" id="myInput" type="text" placeholder="Search..">
+    <label for="myInput">Hledej:</label>
+    <input class="form-control" id="myInput" type="text" placeholder="Hledej..">
     <br>
-    <label for="founded">This id you choose:</label>
-    <input type="text" name="founded" id="founded" placeholder="Click to choose">
+    <label for="founded">Vybrané id:</label>
+    <input type="text" name="founded" id="founded" placeholder="Kliknutím vybereš">
     <br>
-    <button onclick="continue_(0)">Finish registry</button>
+    <button onclick="continue_(0)">Dokončení registrace</button>
     <br>
-    <button onclick="continue_(1)">Add lessons</button>
+    <button onclick="continue_(1)">Přidání hodiny</button>
     <br>
-    <button onclick="continue_(2)">Delete person</button>
+    <button onclick="continue_(2)">Smazaní osoby</button>
     <br>
-    <!--<button onclick="continue_(3)">Forget password</button>
-    <br>-->
     <table id="myTable">
     <br>
 <?php
@@ -43,7 +40,7 @@ echo $filter;
 
 ?>
         </table>
-    <button onclick="change_visibility('find_person', false)">Back</button>
+    <button onclick="change_visibility('find_person', false)">Zpět</button>
 </div>
 </html>
 
@@ -67,11 +64,13 @@ function continue_(inf)
   {
     document.getElementById("add_delete").style.visibility="visible";
     document.getElementById("add_hours").style.visibility="visible";
+    document.getElementById("del_add").innerHTML="Přidat osobu";
   }
   if (inf == 2)
   {
     document.getElementById("add_delete").style.visibility="visible";
     document.getElementById("delete_pers").style.visibility="visible";
+    document.getElementById("del_add").innerHTML="Smazat osobu";
   }
 }
 

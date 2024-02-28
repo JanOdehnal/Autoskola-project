@@ -1,11 +1,11 @@
 <html>
     <div id="add_person_2" class="jump_div_super">
-        <h1>Add new person</h1>
+        <h1>Přidání osoby</h1>
         <form method="POST">
             <input type="hidden" id="reg" name="reg" value="">
             <input type="hidden" id="reg_" name="reg_" value="">
 <br/>
-*In what vehicle will student drive? / Lector prefer:<br>
+*Název kurzu/Bude učit:<br>
 <?php
 $con = connect_mysqli();
 $query = "SELECT id, vehicle_type, num_of_less, visibility from course";
@@ -21,7 +21,7 @@ $stmt->close();
 ?>
 <br>
 <div id="if_student" style="visibility: hidden;">
-    <label for="choose_lec">Choose lector: </label>
+    <label for="choose_lec">Vyber lectora: </label>
     <select name="choose_lec" id="choose_lec">
 <?php
 $query = "SELECT id, name, surname, email from lector";
@@ -36,24 +36,26 @@ $stmt->close();
 ?>
     </select>
     <br>
-    <label for="hour_num">Student will have </label>
+    <label for="hour_num">Počet jízd: </label>
     <input type="number" id="hour_num" name="hour_num">
     <label for="hour_num">hours.</label>
 </div>
 <div id="active_lec" style="visibility: hidden;">
+    Pozice lectora:
     <input type="radio" id="adm" name="pos2" value="admin">
     <label for="adm">Admin</label>
     <input type="radio" id="lec" name="pos2" value="lector">
     <label for="lec">Lector</label>
     <br>
+    Bude učit žáka:
     <input type="radio" id="active" name="if_activ" value="activ">
-    <label for="active">Active</label>
+    <label for="active">Ano</label>
     <input type="radio" id="passiv" name="if_activ" value="passiv">
-    <label for="passiv">Passive</label>
+    <label for="passiv">Ne</label>
 </div>
-<input type="submit" value="Registry person">
+<input type="submit" value="Registruj">
 </form>
-<button onclick="change_visibility('add_person_2', false), change_visibility('if_student', false), change_visibility('active_lec', false)">Back</button>
+<button onclick="change_visibility('add_person_2', false), change_visibility('if_student', false), change_visibility('active_lec', false)">Zpět</button>
 </div>
 </html>
 
@@ -64,9 +66,9 @@ if (isset($_POST["reg"]))
     if ($_POST["reg"] == "student") // add person
     {
         // add record to student_course_lec
-        if ($_POST["type_veh"] == null) echo "<script>document.getElementById('logs').innerHTML = 'You forgot write vehicle type!'</script>";
-        else if ($_POST["choose_lec"] == null) echo "<script>document.getElementById('logs').innerHTML = 'You forgot choose lector!'</script>";
-        //else if (array_values(mysqli_fetch_assoc(mysqli_query($con, "SELECT count() from student_course_lec where student_id= ".$_POST["reg_"])))[0]!=0) echo "<script>document.getElementById('logs').innerHTML = 'Student can have 1 course'</script>";
+        if ($_POST["type_veh"] == null) echo "<script>document.getElementById('logs').innerHTML = 'Nezadal jsi kurz!'</script>";
+        else if ($_POST["choose_lec"] == null) echo "<script>document.getElementById('logs').innerHTML = 'Nezadal jsi lectora!'</script>";
+        else if (array_values(mysqli_fetch_assoc(mysqli_query($con, "SELECT count() from student_course_lec where student_id= ".$_POST["reg_"])))[0]!=0) echo "<script>document.getElementById('logs').innerHTML = 'Student může mít jen jeden kurz!'</script>";
         else 
         {
             $password = rand(100000,999999);
@@ -74,13 +76,14 @@ if (isset($_POST["reg"]))
             data_to_db($con, "INSERT into student_course_lec(student_id, course_id, lector_id) values('" .$_POST["reg_"]. "','" .$_POST["type_veh"]. "','" .$_POST["choose_lec"]. "')");
             if($row = mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT email from student where id = ".$_POST["reg_"])));
             send_email($row["email"], "Při registraci zadejte heslo: ".$password.".");
+            echo "<script>document.getElementById('logs').innerHTML = 'Dokončení registrace žáka!'</script>";
         }
     }
     else
     {
         if ($_POST["if_activ"]==NULL)
         {
-            echo "<script>document.getElementById('logs').innerHTML = 'You forgot write if he is active or passiv!'</script>";
+            echo "<script>document.getElementById('logs').innerHTML = 'Neviplnil jsi jestli bude učit!'</script>";
             return 0;
         }
         else
@@ -90,6 +93,7 @@ if (isset($_POST["reg"]))
             data_to_db($con, "UPDATE lector set verify_pass = ".rand(100000,999999).", possicion = '".$_POST["pos2"]."', active_lec = '".$_POST["if_activ"]."' where id = ".$_POST["reg_"]);
             $row=mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT email from lector where = ".$_POST["reg_"]));
             send_email($row["email"], "Při registraci zadejte heslo: ".$password.".");
+            echo "<script>document.getElementById('logs').innerHTML = 'Dokončení registrace lectora!'</script>";
         }
     }
 }

@@ -1,7 +1,7 @@
 
 <html>
     <div id="log_out_div">
-        <h1>Logg out</h1>
+        <h1>Odahlásit se</h1>
         <form method="post"> 
             <input type="submit" name="logg_out" value="Logg out">
         </form>

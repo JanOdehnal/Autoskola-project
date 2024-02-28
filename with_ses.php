@@ -24,11 +24,11 @@ if (isset($_SESSION["info"]))
     require_once "passed_lesson.php";
     if ($_SESSION["possicion"] == "student")
     {
-        echo "<script>document.getElementById('hello').innerHTML = 'Hello student ".$_SESSION["info"]["name"]." ".$_SESSION["info"]["surname"]."!'</script>";
+        echo "<script>document.getElementById('hello').innerHTML = 'Dobrý den ".$_SESSION["info"]["name"]." ".$_SESSION["info"]["surname"]."!'</script>";
         ?>
         <html>
-            <h1 onclick="change_visibility('add_side', true)">Add side</h1>
-            <h1 onclick="change_visibility('hours', true)">wiew hours</h1>
+            <h1 onclick="change_visibility('add_side', true)">Přidat místo</h1>
+            <h1 onclick="change_visibility('hours', true)">Moje hodiny</h1>
         </html>
         <?php
         require_once "add_side.php";
@@ -38,11 +38,11 @@ if (isset($_SESSION["info"]))
     {
         if ($_SESSION["info"]["possicion"] == "lector")
         {
-            echo "<script>document.getElementById('hello').innerHTML = 'Hello lector ".$_SESSION["info"]["name"]." ".$_SESSION["info"]["surname"]."!'</script>";
+            echo "<script>document.getElementById('hello').innerHTML = 'Dobrý den lector ".$_SESSION["info"]["name"]." ".$_SESSION["info"]["surname"]."!'</script>";
             ?>
             <html>
-                <h1 onclick="change_visibility('add_side', true)">Add side</h1>
-                <h1 onclick="change_visibility('del_side', true)">Delete side</h1>
+                <h1 onclick="change_visibility('add_side', true)">Přidat místo</h1>
+                <h1 onclick="change_visibility('del_side', true)">Smazat místo</h1>
             </html>
             <?php
             require_once "add_side.php";
@@ -50,17 +50,15 @@ if (isset($_SESSION["info"]))
         }
         else
         {
-            echo "<script>document.getElementById('hello').innerHTML = 'Hello admin ".$_SESSION["info"]["name"]." ".$_SESSION["info"]["surname"]."!'</script>";
+            echo "<script>document.getElementById('hello').innerHTML = 'Dobrý den admin ".$_SESSION["info"]["name"]." ".$_SESSION["info"]["surname"]."!'</script>";
             ?>
             <html>
-                <h1 onclick="change_visibility('add_side', true)">Add side</h1>
-                <h1 onclick="change_visibility('del_side', true)">Delete side</h1>
-
-                <h1 onclick="change_visibility('add_veh', true)">Add course</h1>
-                <h1 onclick="change_visibility('del_veh', true)">Delelte course</h1>
-
-                <h1 onclick="change_visibility('add_person_1_', true)">Add person</h1>
-                <h1 onclick="change_visibility('find_person', true)">Find person</h1>
+                <h1 onclick="change_visibility('add_side', true)">Přidat místo</h1>
+                <h1 onclick="change_visibility('del_side', true)">Smazat místo</h1>
+                <h1 onclick="change_visibility('add_veh', true)">Přidat kurz</h1>
+                <h1 onclick="change_visibility('del_veh', true)">Smazat kurz</h1>
+                <h1 onclick="change_visibility('add_person_1_', true)">Přidat osobu</h1>
+                <h1 onclick="change_visibility('find_person', true)">Najít osobu</h1>
             </html>
             <?php
             require_once "add_side.php";
@@ -74,7 +72,7 @@ if (isset($_SESSION["info"]))
 }
 else
 {
-    echo "<script>document.getElementById('hello').innerHTML = 'Hello spectacullar!'</script>";
+    echo "<script>document.getElementById('hello').innerHTML = 'Dobrý den návštěvníku!'</script>";
 }
 require_once "create_timetable.php";
 ?>

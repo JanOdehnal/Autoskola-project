@@ -1,12 +1,12 @@
 <html>
     <div id="log_sign" style="visibility: visible;">
-        <h1 onclick="change_visibility('sign'), change_visibility('log_sign')">Sign in</h1>
-        <h1 onclick="change_visibility('log'), change_visibility('log_sign')">Log in</h1>
+        <h1 onclick="change_visibility('sign'), change_visibility('log_sign')">Přihlásit se</h1>
+        <h1 onclick="change_visibility('log'), change_visibility('log_sign')">Registrace</h1>
     </div>
 
 
     <div id="sign" class="jump_div">
-        <h2>Sign in</h2>
+        <h2>Přihlásit se</h2>
         <form method="post">
             <label for="email_s">*Email:</label>
             <input id="email_s" type="email" name="email_s" required/>
@@ -14,30 +14,30 @@
             <label for="password_s">*Password:</label>
             <input id="password_s" type="password" name="password_s" required/>
             <br>
-            <input type="submit" value="Sign in" >
+            <input type="submit" value="Přihlásit se" >
         </form>
-        <button onclick="change_visibility('sign'), change_visibility('log_sign')">Back</button>
+        <button onclick="change_visibility('sign'), change_visibility('log_sign')">Zpět</button>
     </div>
 
 
     <div id="log" class="jump_div">
-        <h2>Sign in</h2>
+        <h2>Registrace</h2>
         <form method="post">
             <label for="email_l">*Email:</label>
             <input id="email_l" type="email" name="email_l" required/>
             <br>
-            <label for="password_l">*Set password</label>
+            <label for="password_l">*Zadej heslo:"</label>
             <input id="password_l" type="password" name="password_l" required/>
             <br>
-            <label for="password_ag">*Write password again:</label>
+            <label for="password_ag">*Zadej heslo znovu:</label>
             <input id="password_ag" type="password" name="password_ag" required/>
             <br>
-            <label for="password_ver">*Werication password:</label>
+            <label for="password_ver">*Zadej evěřovací heslo:</label>
             <input id="password_ver" type="password" name="password_ver" required/>
             <br>        
-            <input type="submit" value="Log in">
+            <input type="submit" value="Registrace">
         </form>
-        <button onclick="change_visibility('log'), change_visibility('log_sign')">Back</button>
+        <button onclick="change_visibility('log'), change_visibility('log_sign')">Zpět</button>
     </div>
 </html>
 
@@ -56,19 +56,23 @@ if (isset($_POST["email_s"]))
     }
     if ($row!=null)
     {
-        if ($_POST["password_s"] == $row["password"])
+        
+        /*$string = "Hello, world!";
+        $hash = hash("sha256", $string);*/
+
+        if (md5($_POST["password_s"]) == $row["password"])
         {
             $_SESSION["info"] = $row;
         }
         else
         {
-            echo "<script>document.getElementById('logs').innerHTML = 'You write incorrect password!'</script>";
+            echo "<script>document.getElementById('logs').innerHTML = 'Chybné heslo!'</script>";
             session_unset();
         }
     }
     else
     {
-        echo "<script>document.getElementById('logs').innerHTML = 'You write wrong email!'</script>";
+        echo "<script>document.getElementById('logs').innerHTML = 'Chybný email!'</script>";
         session_unset();
     }
 }
@@ -78,7 +82,7 @@ if (isset($_POST["email_l"]))//hash
 {
     if ($_POST["password_l"] != $_POST["password_ag"])
     {
-        echo "<script>document.getElementById('logs').innerHTML = 'You write not write passwords same!'</script>";
+        echo "<script>document.getElementById('logs').innerHTML = 'Tvoje hesla nejsou stejná!'</script>";
         return 0;
     }
     $sql = "SELECT x.*, y.* from student x left join student_course_lec y on x.id = y.student_id where email ='".$_POST["email_l"]."'";
@@ -87,7 +91,7 @@ if (isset($_POST["email_l"]))//hash
     {
         if($row["password"] != null)
         {
-            echo "<script>document.getElementById('logs').innerHTML = 'You are already logged in!'</script>";
+            echo "<script>document.getElementById('logs').innerHTML = 'Již jsi přihlášen!'</script>";
             return 0;
         }
         else if ($row["verify_pass"] == $_POST["password_ver"])
@@ -105,7 +109,7 @@ if (isset($_POST["email_l"]))//hash
         {
             if($row["password"] != null)
             {
-                echo "<script>document.getElementById('logs').innerHTML = 'You are already logged in!'</script>";
+                echo "<script>document.getElementById('logs').innerHTML = 'Již jsi přihlášen!'</script>";
                 return 0;
             }
             else if ($row["verify_pass"] == $_POST["password_ver"])
@@ -116,12 +120,12 @@ if (isset($_POST["email_l"]))//hash
             }
             else
             {
-                echo "<script>document.getElementById('logs').innerHTML = 'You write incorrect veryfication password!'</script>";
+                echo "<script>document.getElementById('logs').innerHTML = 'Špatné ověřovací heslo!'</script>";
             }
         }
         else
         {
-            echo "<script>document.getElementById('logs').innerHTML = 'You write wrong email!'</script>";
+            echo "<script>document.getElementById('logs').innerHTML = 'Zadal jsi nesprávný email!'</script>";
             return 0;
         }
     }
