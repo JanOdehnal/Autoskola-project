@@ -5,7 +5,7 @@ delete from lector where id=2;
 delete from course where id=4;
 delete from student where id=7;
 delete from sides where id=2;
-delete from timetable where lesson_num = 4;
+delete from timetable where stident_id < 100;
 delete from student_course_lec where student_id = 7;
 -- alter table course modify vehicle_type varchar(45) null unique;
 alter table student add column verify_pass int null;
@@ -18,6 +18,7 @@ select * from timetable;
 select count(id) from lector;
 select count(student_id) from timetable where student_id = 1;
 use drive_sch_db;
+delete from timetable where student_id < 100;
 -- alter table student add column status enum('finish', 'start', 'activ') default 'start';
 alter table lector drop visibility;
 alter table sides add column visibility ENUM('true', 'false');
@@ -52,10 +53,10 @@ SELECT distinct x.* , y.lector_id, z.*, a.*, b.* from timetable x left join stud
 SELECT distinct x.* , y.lector_id, z.*, a.*, b.* from timetable x left join student_course_lec y on x.student_id = y.student_id left join sides z on x.sides_id = z.id left join student a on x.student_id = a.id left join course b on b.id = y.course_id where x.lesson_date >= '2024-02-26' and teacher_id=1 ORDER BY x.lesson_date, x.lesson_num;
 
 select x.*, y.email from timetable x left join student y on x.student_id = y.id where student_id=1;
-
+select x.*, y.* from timetable x left join sides y on y.id = x.sides_id;
 SELECT count(student_id) from timetable where lesson_date = '2024-03-02' and student_id =6;
 SELECT * from timetable where student_id = 6;
-alter table lector drop column lesson_num;
+alter table student drop column lesson_num;
 alter table student add column lesson_num_h int null;
 alter table timetable add column teacher_id int null;
 alter table timetable drop column lector_id;
@@ -71,7 +72,6 @@ CREATE TABLE IF NOT EXISTS drive_sch_db.time_info (
     vis_weeks int null,
     time_take int null
 ) ENGINE = InnoDB;
-select * from time_info;
 drop table time_info;
 insert into time_info (num_less_per_day, times, vis_weeks, time_take) values (5, "00:00-01:00-02:00-03:00-04:00", 3, 0);
-drop database drive_sch_db;
+select * from time_info;

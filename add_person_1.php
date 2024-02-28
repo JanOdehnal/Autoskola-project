@@ -32,7 +32,7 @@ require_once "connect_mysqli.php";
             <label for="tel">*Telefon: +</label>
             <input id="tel" type="tel" value="420" name="phone_number" pattern="[0-9]{12}" required/>
             <br>
-            <input type="submit" value="registry">
+            <input type="submit" value="Registruj!">
         </form>
         <?php
         if (isset($_SESSION["possicion"]) && $_SESSION["possicion"]=="lector" && $_SESSION["info"]["possicion"] == "admin") echo "<button onclick=\"change_visibility('add_person_1_')\">Zpět</button>";
@@ -57,7 +57,7 @@ if (isset($_POST["posicion"]))
         return 0;
     }
     data_to_db($con,"INSERT into ".$_POST["posicion"]."(name, surname, email, phone_number) values('" .$_POST["name"]. "','" .$_POST["surname"]. "','" .$_POST["email"]. "','" .$_POST["phone_number"]. "')");
-    send_email($_POST["email"], "Jste přihlášeni do Autoskoly, počkejte na další email!");
+    //send_email($_POST["email"], "Jste přihlášeni do Autoskoly, počkejte na další email!");
     if (isset($_SESSION["possicion"]) && $_SESSION["possicion"]=="lector" && $_SESSION["info"]["possicion"] == "admin") echo "<script>window.onload(reg('".$_POST["posicion"]."', ".$con->insert_id."))</script>";
 }
 ?>

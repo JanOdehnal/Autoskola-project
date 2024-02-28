@@ -60,7 +60,7 @@ if (isset($_SESSION["info"]))
                 <h1 onclick="change_visibility('del_veh', true)">Smazat kurz</h1>
                 <h1 onclick="change_visibility('add_person_1_', true)">Přidat osobu</h1>
                 <h1 onclick="change_visibility('find_person', true)">Najít osobu</h1>
-                <h1 onclick="change_visibility('edit_timeteble', true)">Změnit rozvh</h1>
+                <!--<h1 onclick="change_visibility('edit_timeteble', true)">Změnit rozvh</h1>-->
             </html>
             <?php
             require_once "add_side.php";

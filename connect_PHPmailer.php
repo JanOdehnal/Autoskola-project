@@ -24,7 +24,7 @@ function create_email()
     $mail->Port = 465; // set the SMTP port for the GMAIL server
     $mail->Username = "autoskola332@gmail.com"; // GMAIL username
     $mail->Password = "scsmouvcdiutixvr"; // GMAIL password
-    //$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
     return $mail;
 }
 
@@ -35,7 +35,7 @@ function send_email($name, $msg)
     $mail->SetFrom("autoskola332@gmail.com", "Autoskola");
     $mail->Subject = "Autoskola info";
     $mail->Body = $msg;
-    /*try{
+    try{
         $mail->Send();
         echo "<script>document.getElementById('logs').innerHTML = 'Uspěšně odeslano!'</script>";
     } catch(Exception $e){
@@ -43,7 +43,7 @@ function send_email($name, $msg)
         echo "<script>document.getElementById('logs').innerHTML = 'Chyba - " . $mail->ErrorInfo."'</script>";
 
     }
-    echo "<script>location.reload()</script>";*/
+    echo "<script>location.reload()</script>";
     echo "<script>document.getElementById('logs').innerHTML = 'Emaily bohužel nefungují!'</script>";
 }
 ?>

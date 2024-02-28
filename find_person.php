@@ -10,9 +10,9 @@
     <br>
     <button onclick="continue_(0)">Dokončení registrace</button>
     <br>
-    <button onclick="continue_(1)">Přidání hodiny</button>
+    <button onclick="continue_(1)">Přidat hodinu studentu</button>
     <br>
-    <button onclick="continue_(2)">Smazaní osoby</button>
+    <button onclick="continue_(2)">Smazat studenta</button>
     <br>
     <table id="myTable">
     <br>

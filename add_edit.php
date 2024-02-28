@@ -27,8 +27,9 @@ if (isset($_POST["num_h"]))
     if ($_POST["pos_contin_p"] == "student" && $_POST["num_h"]==0);
     else if ($row=mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT * from ".$_POST["pos_contin_p"]." where id = ".$_POST["pos_contin_i"])))
     {
-        data_to_db(connect_mysqli(), "UPDATE student SET lesson_num = ".($row["lesson_num"]+$_POST["num_h"])." where id = ".$_POST["pos_contin_i"]);
+        data_to_db(connect_mysqli(), "UPDATE student SET lesson_num_h = ".($row["lesson_num_h"]+$_POST["num_h"])." where id = ".$_POST["pos_contin_i"]);
         echo "<script>document.getElementById('logs').innerHTML = 'Přidal jsi ".$_POST["num_h"]." hodin ".$row["name"]." ".$row["surname"]."!'</script>";
+        echo "<script>location.reload()</script>";
         return 0;
     }
     /*
@@ -45,7 +46,7 @@ if (isset($_POST["del_pers"]))
             data_to_db(connect_mysqli(), "DELETE from timetable where student_id= ".$_POST["pos_contin_i"]);
             data_to_db(connect_mysqli(), "DELETE from student_course_lec where student_id= ".$_POST["pos_contin_i"]);
             data_to_db(connect_mysqli(), "DELETE from student where id= ".$_POST["pos_contin_i"]);
-            echo "<script>document.getElementById('logs').innerHTML = 'Smazal jsi osobu!'</script>";
+            echo "<script>document.getElementById('logs').innerHTML = 'Smazal jsi studenta!'</script>";
         }
         else
         {

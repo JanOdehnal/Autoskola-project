@@ -68,14 +68,14 @@ if (isset($_POST["reg"]))
         // add record to student_course_lec
         if ($_POST["type_veh"] == null) echo "<script>document.getElementById('logs').innerHTML = 'Nezadal jsi kurz!'</script>";
         else if ($_POST["choose_lec"] == null) echo "<script>document.getElementById('logs').innerHTML = 'Nezadal jsi lectora!'</script>";
-        else if (array_values(mysqli_fetch_assoc(mysqli_query($con, "SELECT count() from student_course_lec where student_id= ".$_POST["reg_"])))[0]!=0) echo "<script>document.getElementById('logs').innerHTML = 'Student může mít jen jeden kurz!'</script>";
+        else if (array_values(mysqli_fetch_assoc(mysqli_query($con, "SELECT count(student_id) from student_course_lec where student_id= ".$_POST["reg_"])))[0] != 0) echo "<script>document.getElementById('logs').innerHTML = 'Student může mít jen jeden kurz!'</script>";
         else 
         {
             $password = rand(100000,999999);
-            data_to_db($con, "UPDATE student set verify_pass = ".$password.", lesson_num = ".$_POST["hour_num"]." where id = ".$_POST["reg_"]);
+            data_to_db($con, "UPDATE student set verify_pass = ".$password.", lesson_num_h = ".$_POST["hour_num"]." where id = ".$_POST["reg_"]);
             data_to_db($con, "INSERT into student_course_lec(student_id, course_id, lector_id) values('" .$_POST["reg_"]. "','" .$_POST["type_veh"]. "','" .$_POST["choose_lec"]. "')");
             if($row = mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT email from student where id = ".$_POST["reg_"])));
-            send_email($row["email"], "Při registraci zadejte heslo: ".$password.".");
+            //send_email($row["email"], "Při registraci zadejte heslo: ".$password.".");
             echo "<script>document.getElementById('logs').innerHTML = 'Dokončení registrace žáka!'</script>";
         }
     }
@@ -83,7 +83,7 @@ if (isset($_POST["reg"]))
     {
         if ($_POST["if_activ"]==NULL)
         {
-            echo "<script>document.getElementById('logs').innerHTML = 'Neviplnil jsi jestli bude učit!'</script>";
+            echo "<script>document.getElementById('logs').innerHTML = 'Nevyplnil jsi jestli bude učit!'</script>";
             return 0;
         }
         else
@@ -91,8 +91,8 @@ if (isset($_POST["reg"]))
             //hash!!!!
             $password = rand(100000,999999);
             data_to_db($con, "UPDATE lector set verify_pass = ".rand(100000,999999).", possicion = '".$_POST["pos2"]."', active_lec = '".$_POST["if_activ"]."' where id = ".$_POST["reg_"]);
-            $row=mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT email from lector where = ".$_POST["reg_"]));
-            send_email($row["email"], "Při registraci zadejte heslo: ".$password.".");
+            $row=mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT email from lector where id =".$_POST["reg_"]));
+            //send_email($row["email"], "Při registraci zadejte heslo: ".$password.".");
             echo "<script>document.getElementById('logs').innerHTML = 'Dokončení registrace lectora!'</script>";
         }
     }

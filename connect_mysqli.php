@@ -18,7 +18,7 @@ function data_to_db($con, $sql)
 {
     if (mysqli_query($con, $sql))
     {
-        return 0;//echo '<script>alert("New record proccesed successfully.'.$sql.'")</script>';
+        echo '<script>alert("New record proccesed successfully.'.$sql.'")</script>';
     }
     else echo '<script>alert("Error: ' .$sql. '\n' . mysqli_error($con). '")</script>';
 }     

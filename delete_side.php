@@ -27,5 +27,6 @@ if (isset($_POST["mod_side"]))
 {
     data_to_db($con, "UPDATE sides SET visibility = 'false' WHERE (id = " .$_POST["mod_side"]. ")");
     echo "<script>document.getElementById('logs').innerHTML = 'Smazal jsi místo!'</script>";
+    echo "<script>location.reload()</script>";
 }
 ?>

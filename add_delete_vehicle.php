@@ -45,10 +45,13 @@
 if (isset($_POST["vehic_name"])) //add vehicle
 {
     data_to_db($con, "insert into course(vehicle_type, num_of_less, visibility) values ('" .$_POST["vehic_name"]. "', " .$_POST["num_less_"].", 'true')");
+    echo "<script>location.reload()</script>";
 }
 
 if (isset($_POST["del_vehicle"])) //delete vehicle
 {
     data_to_db($con, "UPDATE course SET visibility = 'false' WHERE (id = " .$_POST["del_vehicle"]. ")");
+    echo "<script>location.reload()</script>";
 }
+
 ?>
