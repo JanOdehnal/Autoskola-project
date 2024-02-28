@@ -15,12 +15,12 @@
             <label for="meet_side">Místo nástupu:</label>
             <select name="meet_side" id="meet_side" require>  
 <?php
-    $query = "SELECT id, town, street, GPS_coordinate, more_info from sides";
+    $query = "SELECT id, town, street, GPS_coordinate, more_info, visibility from sides";
     if ($stmt = $con->prepare($query)) {
         $stmt->execute();
-        $stmt->bind_result($id, $town, $street, $GPS_coordinate, $more_info);
+        $stmt->bind_result($id, $town, $street, $GPS_coordinate, $more_info, $visibility);
         while ($stmt->fetch()) {
-            echo '<option value="' . $id . '">' .$town. ', ' .$street. ', ' .$GPS_coordinate. ', ' .$more_info. '</option>';
+            if ($visibility == 'true') echo '<option value="' . $id . '">' .$town. ', ' .$street. ', ' .$GPS_coordinate. ', ' .$more_info. '</option>';
         }
         $stmt->close();
     }
