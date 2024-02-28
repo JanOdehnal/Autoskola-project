@@ -77,7 +77,7 @@ function create_table($lector_row, $my_timetable)
         {
             if ($h == 0 && $j == 0) $table=$table."<td>Tento týden</td>";
             else if ($j==0) $table=$table."<td>" .$h. ". week</td>";
-            else $table=$table."<td class='else' id='" .$lector_row["id"]."_". $h ."_". $j . "'>".$my_timetable->get_time_less()[$j-1]."</td>";// bez id
+            else $table=$table."<td class='else' onclick=\"change_tim(".($j-1).")\" id=" .$lector_row["id"]."_". $h ."_". $j . "'>".$my_timetable->get_time_less()[$j-1]."</td>";// bez id
         }
         $table=$table."</tr>";
         for ($i = 0; $i < 5; $i++)// number of days
@@ -183,7 +183,27 @@ admin all
         </form>
         <button onclick="change_visibility('edit_timeteble', false)">Zpět</button>
     </div>
+
+    <!--<div id="edit_h_tim" class="jump_div">
+        <h1>Změna času</h1>
+        <form method="post">
+            <input type="hidden" id="change_tim_" name="change_tim_">
+            <label for="change_tim">Zadej čas:</label>
+            <input type="time" id="change_tim" name="change_tim">
+            <br>
+            <input type="submit" value="Poslat">
+        </form>
+        <button onclick="change_visibility('edit_h_tim', false)">Zpět</button>
+    </div>-->
 </html>
+
+<script>
+    function change_tim(num)
+    {
+        document.getElementById("change_tim_").value = num;
+        change_visibility("edit_h_tim", true);
+    }
+</script>
 
 <?php
 require_once "connect_mysqli.php";
@@ -217,7 +237,28 @@ if (isset($_POST["add_les"]))
         if ($my_timetable->get_num_less() > 0)data_to_db(connect_mysqli(), "UPDATE time_info set num_less_per_day = ".($my_timetable->get_num_less()-1)." , times = '".$times."'");
         echo "<script>document.getElementById('logs').innerHTML = 'Hodina odebrana!'</script>";
     }
-
 }
 
+/*if (isset($_POST["change_tim"]))
+{
+    if ($_POST["change_tim"] != null)
+    {
+        $times ="";
+        $tmp=true;
+        $counter=0;
+        foreach ($my_timetable->get_time_less() as $cell)
+        {
+            $counter=$counter+1;
+            if ($cell = $my_timetable->get_time_less()[number($_POST["change_tim_"])]) $cell = $_POST["change_tim"];
+            if ($tmp)
+            {
+                $tmp = false;
+                $times = $times.$cell;
+            }
+            else $times = $times."-".$cell;
+        }
+        if ($my_timetable->get_num_less() > 0)data_to_db(connect_mysqli(), "UPDATE time_info set times = '".$times."'");
+        echo "<script>document.getElementById('logs').innerHTML = 'Hodina změněna!'</script>";
+    }
+}*/
 ?>
