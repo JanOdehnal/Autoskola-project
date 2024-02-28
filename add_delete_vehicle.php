@@ -3,10 +3,10 @@
         <h1>přidej kurz</h1>
         <form method="post">
             <label for="vehic_name">*Název:</label>
-            <input id="vehic_name" type="text" name="vehic_name" required/>
+            <input id="vehic_name" type="text" name='vehic_name' required/>
             <br>
             <label for="num_less_">*Počet povinných hodin(45 min):</label>
-            <input id="num_less_" type="number" name="num_less_" min="0" required>
+            <input id="num_less_" type="number" name='num_less_' min="0" required>
             <br>
             <input type="submit" value="Add vehicle">
             <br>
@@ -15,7 +15,7 @@
     </div>
 
     <div id="del_veh" class="jump_div">
-        <h1>Zrišit kurz</h1>
+        <h1>Zrušit kurz</h1>
         <form method="post">
             <label for="del_vehicle">Delete vehicle: </label>
             <select name="del_vehicle" id="del_vehicle" require>

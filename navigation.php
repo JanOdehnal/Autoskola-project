@@ -12,7 +12,7 @@
 </span>
 
 <span class="menuItem">
-<a href="">Pravidla</a>
+<a href="rules.php">Pravidla</a>
 </span>
 
 <span class="menuItem">

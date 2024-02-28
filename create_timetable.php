@@ -13,24 +13,23 @@ class Timetable
     function get_time_less(){return $this->time_less;}
     function get_registry(){return $this->registry;}
     function set_weeks($weeks){ $this->weeks=$weeks;}
-    /*function set_duration(){$this->duration;}
-    function set_num_less(){$this->num_less;}
-    function set_time_less(){$this->time_less;}*/
 
-    function set_data($weeks, $num_less, $duration, $array, $registry)
+    function set_data($duration)
     {
-        $this->weeks = $weeks;
-        $this->num_less = $num_less;
         $this->duration = $duration;
-        $this->time_less = $array;
-        $this->registry = $registry;
+        if ($time = mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT * from time_info")))
+        {
+            $this->num_less=$time["num_less_per_day"];
+            $this->weeks=$time["vis_weeks"];
+            $this->registry=$time["time_take"];
+            $this->time_less=explode("-", $time["times"]);
+
+        }
     }
 }
 
 $my_timetable = new Timetable();
-$my_timetable->set_data(3, 5, 90, ["00:00", "01:00", "02:00", "03:00", "04:00"], 0);
-//echo $my_timetable->get_time_less()[0];
-//echo $my_timetable->get_weeks()."class<br>";
+$my_timetable->set_data(45);
 
 
 function get_last_Monday()
@@ -81,7 +80,7 @@ function create_table($lector_row, $my_timetable)
             else $table=$table."<td class='else' id='" .$lector_row["id"]."_". $h ."_". $j . "'>".$my_timetable->get_time_less()[$j-1]."</td>";// bez id
         }
         $table=$table."</tr>";
-        for ($i = 0; $i < 7; $i++)// number of days
+        for ($i = 0; $i < 5; $i++)// number of days
         {
             $table=$table."<tr>";
             for ($j = 0; $j < $my_timetable->get_num_less()+1; $j++)// hours again
@@ -94,8 +93,8 @@ function create_table($lector_row, $my_timetable)
                     {
                         if (isset($_SESSION["info"]) && $_SESSION["possicion"]!="student")
                         {
-                            if ($_SESSION["info"]["possicion"]=="admin") $table=$table."<td onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 4)\" class='taken'>Autoskola</td>";
-                            else if ($_SESSION["info"]["possicion"]=="lector") $table=$table."<td onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 1)\" class='taken'>Autoskola info</td>";
+                            if ($_SESSION["info"]["possicion"]=="admin") $table=$table."<td onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 4)\" class='taken'>Autoškola</td>";
+                            else if ($_SESSION["info"]["possicion"]=="lector") $table=$table."<td onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 1)\" class='taken'>Autoškola info</td>";
                         }
                         else $table=$table."<td class='taken'>driving school</td>";
                     }
@@ -169,43 +168,56 @@ student 1times || all
 lector 1times
 admin all
 */
-
 ?>
-
 <html>
-
-<!--<div id="edyt_timetable" style="visibility: visible;">
-    <h1>Edyt timetable</h1>
-    <form method="post">
-<?php
-    /*echo "<label for='time_t_weeks'>Num of weeks for future:</label>
-        <input id='time_t_weeks' type='number' min='0' value=".$my_timetable->get_weeks().">
-        <br>
-        <label for='timet_dur'>Duration:</label>
-        <input id='timet_dur' type='number' min='0' value=".$my_timetable->get_duration().">
-        <br>";
-    for ($i=1;$i<$my_timetable->get_num_less()+1;$i++)//count of hours solve after
-    {
-        echo "<label for='tim_h_".$i."'>".$i. " hour:</label>
-            <input type='time' id='tim_h_". $i ."' value='". $my_timetable->get_time_less()[$i-1] . "'><br>";
-    }*/
-?>
-        <input type="submit" value="Edyt">
-    </form>
-</div>
-
-<p id="edyt_smf"></p>
--->
+    <div id="edit_timeteble" class="jump_div">
+        <h1>Změna rozvhu</h1>
+        <form method="post">
+            <label for="add_les">Přidej hodinu v:</label>
+            <input type="time" id="add_les" name="add_les">
+            <br>
+            <label for="del_les">Smazat poslední hodinu(ověř si, ži ji nikdo nema!):</label>
+            <input type="radio" id="del_les" name="del_les">
+            <br>
+            <input type="submit" value="Poslat">
+        </form>
+        <button onclick="change_visibility('edit_timeteble', false)">Zpět</button>
+    </div>
 </html>
-<?php //dodelat info ze souboru
-if ($_POST)
-{    
-    if (isset($_POST["time_t_weeks"]))
-    { 
-        $my_timetable->set_weeks($_POST["time_t_weeks"]);
 
+<?php
+require_once "connect_mysqli.php";
+
+if (isset($_POST["add_les"]))
+{
+    if($_POST["add_les"]!=null)
+    {
+        $times ="";
+        foreach ($my_timetable->get_time_less() as $cell)
+        {
+            $times = $times.$cell."-";
+        }
+        $times = $times.$_POST["add_les"];
+        data_to_db(connect_mysqli(), "UPDATE time_info set num_less_per_day = ".($my_timetable->get_num_less()+1)." , times = '".$times."'");
+        echo "<script>document.getElementById('logs').innerHTML = 'Hodina přidana!'</script>";
     }
+    if($_POST["del_les"]!=null)
+    {
+        $times ="";
+        $tmp=true;
+        foreach ($my_timetable->get_time_less() as $cell)
+        {
+            if ($tmp)
+            {
+                $tmp = false;
+                $times = $times.$cell;
+            }
+            else $times = $times."-".$cell;
+        }
+        if ($my_timetable->get_num_less() > 0)data_to_db(connect_mysqli(), "UPDATE time_info set num_less_per_day = ".($my_timetable->get_num_less()-1)." , times = '".$times."'");
+        echo "<script>document.getElementById('logs').innerHTML = 'Hodina odebrana!'</script>";
+    }
+
 }
 
-//echo time()+$my_timetable->get_registry().",".strtotime($my_timetable->get_time_less()[1].":00")-strtotime("00:00:00");
 ?>
