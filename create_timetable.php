@@ -60,9 +60,11 @@ function create_table($lector_row, $my_timetable)
     $tmp=0;//use with sec - day
     $last_Mo = get_last_Monday();
 
-    //$sql="SELECT  distinct x.* , y.lector_id, z.* from timetable x left join student_course_lec y on x.student_id = y.student_id left join sides z on x.sides_id = z.id where x.lesson_date >= '".date("Y-m-d", get_last_Monday())."' and (y.lector_id=" .$lector_row["id"]. " or teacher_id=" .$lector_row["id"]. ") ORDER BY x.lesson_date, x.lesson_num;";
+    //$sql="SELECT  distinct x.* , y.lector_id, z.* from timetable x left join student_course_lec y on x.student_id = y.student_id left join sides z on x.sides_id = z.id where x.lesson_date >= '".date("Y-m-d", get_last_Monday())."' and teacher_id=" .$lector_row["id"]. " ORDER BY x.lesson_date, x.lesson_num;";
 
-    $sql="SELECT  distinct x.* , y.lector_id, z.* from timetable x left join student_course_lec y on x.student_id = y.student_id left join sides z on x.sides_id = z.id where x.lesson_date >= '".date("Y-m-d", get_last_Monday())."' and  teacher_id=" .$lector_row["id"]. " ORDER BY x.lesson_date, x.lesson_num;";
+    $sql="SELECT distinct x.* , y.lector_id, z.*, a.*, b.* from timetable x left join student_course_lec y on x.student_id = y.student_id left join sides z on x.sides_id = z.id left join student a on x.student_id = a.id left join course b on b.id = y.course_id where x.lesson_date >= '".date("Y-m-d", get_last_Monday())."' and  teacher_id=" .$lector_row["id"]. " ORDER BY x.lesson_date, x.lesson_num;";
+    //echo "SELECT distinct x.* , y.lector_id, z.*, a.*, b.* from timetable x left join student_course_lec y on x.student_id = y.student_id left join sides z on x.sides_id = z.id left join student a on x.student_id = a.id left join course b on b.id = y.course_id where x.lesson_date >= '".date("Y-m-d", get_last_Monday())."' and  teacher_id=" .$lector_row["id"]. " ORDER BY x.lesson_date, x.lesson_num;";
+
     $sql_stat = mysqli_query(connect_mysqli(), $sql);
     $no_records = false;
     if (!$row_t = mysqli_fetch_assoc($sql_stat))
@@ -114,20 +116,20 @@ function create_table($lector_row, $my_timetable)
                         {
                             if ($_SESSION["info"]["possicion"]=="lector")//for lector
                             {
-                                if ($row_t["finish_lesson"]=="true") $table=$table."<td  onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 1)\" class='taken'>succesfully finish</td>";
-                                else if ($row_t["finish_lesson"]=="false") $table=$table."<td  onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 1)\" class='taken'>unsuccesfully finish</td>";
-                                else if (time()-300 < $tmp+strtotime($my_timetable->get_time_less()[$j-1].":00")-strtotime("00:00:00")+$my_timetable->get_duration()*60) $table=$table."<td  onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 0)\" class='taken'>not finish yet</td>";
-                                else $table=$table."<td  onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 1)\" class='taken'>check lesson</td>";
+                                if ($row_t["finish_lesson"]=="true") $table=$table."<td  onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].", '".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 1, '".$row_t["vehicle_type"]."', '".$row_t["name"]." ".$row_t["surname"]."')\" class='taken'>succesfully finish</td>";
+                                else if ($row_t["finish_lesson"]=="false") $table=$table."<td  onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 1, '".$row_t["vehicle_type"]."', '".$row_t["name"]." ".$row_t["surname"]."')\" class='taken'>unsuccesfully finish</td>";
+                                else if (time()-300 < $tmp+strtotime($my_timetable->get_time_less()[$j-1].":00")-strtotime("00:00:00")+$my_timetable->get_duration()*60) $table=$table."<td  onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 0, '".$row_t["vehicle_type"]."', '".$row_t["name"]." ".$row_t["surname"]."')\" class='taken'>not finish yet</td>";
+                                else $table=$table."<td  onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 1, '".$row_t["vehicle_type"]."', '".$row_t["name"]." ".$row_t["surname"]."')\" class='taken'>check lesson</td>";
                             }
                             if ($_SESSION["info"]["possicion"]=="admin")//for admin
                             {
-                                if ($row_t["finish_lesson"]=="true") $table=$table."<td  onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 4)\" class='taken'>succesfully finish</td>";
-                                else if ($row_t["finish_lesson"]=="false") $table=$table."<td  onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 4)\" class='taken'>unsuccesfully finish</td>";
-                                else if (time()-300 < $tmp+strtotime($my_timetable->get_time_less()[$j-1].":00")-strtotime("00:00:00")+$my_timetable->get_duration()*60) $table=$table."<td  onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 2)\" class='taken'>not finish yet</td>";
-                                else $table=$table."<td  onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 4)\" class='taken'>check lesson</td>";
+                                if ($row_t["finish_lesson"]=="true") $table=$table."<td  onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 4, '".$row_t["vehicle_type"]."', '".$row_t["name"]." ".$row_t["surname"]."')\" class='taken'>succesfully finish</td>";
+                                else if ($row_t["finish_lesson"]=="false") $table=$table."<td  onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 4, '".$row_t["vehicle_type"]."', '".$row_t["name"]." ".$row_t["surname"]."')\" class='taken'>unsuccesfully finish</td>";
+                                else if (time()-300 < $tmp+strtotime($my_timetable->get_time_less()[$j-1].":00")-strtotime("00:00:00")+$my_timetable->get_duration()*60) $table=$table."<td  onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 2, '".$row_t["vehicle_type"]."', '".$row_t["name"]." ".$row_t["surname"]."')\" class='taken'>not finish yet</td>";
+                                else $table=$table."<td  onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 4, '".$row_t["vehicle_type"]."', '".$row_t["name"]." ".$row_t["surname"]."')\" class='taken'>check lesson</td>";
                             }
                         }
-                        else $table=$table."<td  onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 0)\" class='taken'>taken</td>"; 
+                        else $table=$table."<td  onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 0, '".$row_t["vehicle_type"]."', '".$row_t["name"]." ".$row_t["surname"]."')\" class='taken'>taken</td>"; 
                     }
                     else $table=$table."<td class=\"taken\">taken</td>";
                     if(!$row_t = mysqli_fetch_assoc($sql_stat)) $no_records = true; 

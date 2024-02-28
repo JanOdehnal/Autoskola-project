@@ -9,6 +9,7 @@
         <input type="hidden" id="lec_id_s" name="lec_id_s" value="">
         <p id="meet_s"><p>
         <p id="type_car"><p>
+        <p id="stu_name"><p>
         <div id="choose_side" style="visibility:hidden"><!--for student-->
             <input type="hidden" name="change" id="change" value="">
             <label for="meet_side">Meet side:</label>
@@ -21,7 +22,7 @@
         while ($stmt->fetch()) {
             echo '<option value="' . $id . '">' .$town. ', ' .$street. ', ' .$GPS_coordinate. ', ' .$more_info. '</option>';
         }
-        echo '<option onclick="">add side</option>';
+        echo '<option onclick="change_visibility("add_side", false)">add side</option>';
         $stmt->close();
     }
 ?>
@@ -53,7 +54,7 @@
 </html>
 
 <script>
-    function check_lesson(pos_hour, date, lector, side, info)
+    function check_lesson(pos_hour, date, lector, side, info, veh_type=null, name=null)
     {
         document.getElementById("change").value = "";
         document.getElementById("lec_id_s").value = lector;
@@ -94,6 +95,8 @@
         document.getElementById("start_hour_f").innerHTML =  document.getElementById(lector+"_0_"+pos_hour).innerHTML;
         document.getElementById("start_hour_f_").value =  pos_hour;
         document.getElementById("meet_s").innerHTML = "side: "+side;
+        if(veh_type!=null)document.getElementById("type_car").innerHTML="vehicle: "+veh_type;
+        if(name!=null)document.getElementById("stu_name").innerHTML="name: "+name;
     }
 </script>
 
@@ -120,7 +123,7 @@ if(isset($_POST["start_date_f_"]))
             echo "<script>document.getElementById('logs').innerHTML = 'Someone was faster!'</script>";
             return 0;
         }
-        if (array_values(mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT count(student_id) from timetable where student_id = " .$_SESSION["info"]["id"])))[0] > $_SESSION["info"]["lesson_num"])
+        if (array_values(mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT count(student_id) from timetable where student_id = " .$_SESSION["info"]["id"])))[0] > $_SESSION["info"]["lesson_num_h"])
         {
             echo array_values(mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT count(student_id) from timetable where student_id = " .$_SESSION["info"]["id"])))[0];
             echo "<script>document.getElementById('logs').innerHTML = 'You pass all your hours!'</script>";

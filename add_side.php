@@ -4,7 +4,7 @@ $con = connect_mysqli();
 ?>
 
 <html>
-    <div id="add_side" class="jump_div">
+    <div id="add_side" class="jump_div_super">
         <h1>Add side</h1>
         <form method="post">
             <label for="town">Town name:</label>
