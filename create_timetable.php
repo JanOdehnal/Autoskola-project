@@ -76,8 +76,8 @@ function create_table($lector_row, $my_timetable)
         for ($j = 0; $j < $my_timetable->get_num_less()+1; $j++)//number of hours
         {
             if ($h == 0 && $j == 0) $table=$table."<td>Tento týden</td>";
-            else if ($j==0) $table=$table."<td>" .$h. ". week</td>";
-            else $table=$table."<td class='else' onclick=\"change_tim(".($j-1).")\" id=" .$lector_row["id"]."_". $h ."_". $j . "'>".$my_timetable->get_time_less()[$j-1]."</td>";// bez id
+            else if ($j==0) $table=$table."<td>" .$h. ". týden</td>";
+            else $table=$table."<td class='else' id=" .$lector_row["id"]."_". $h ."_". $j . ">".$my_timetable->get_time_less()[$j-1]."</td>";// bez id
         }
         $table=$table."</tr>";
         for ($i = 0; $i < 5; $i++)// number of days
@@ -100,7 +100,6 @@ function create_table($lector_row, $my_timetable)
                     }
                     else if (isset($_SESSION["possicion"]))
                     {
-                        //TODO if finish, checked
                         if ($_SESSION["possicion"]=="student" && $row_t["student_id"]==$_SESSION["info"]["id"]) //for student
                         {  
                             if ($row_t["finish_lesson"]=="true") $table=$table."<td class='taken'>Tvoje hodina proběhla.</td>";
@@ -219,14 +218,18 @@ if (isset($_POST["add_les"]))
         }
         $times = $times.$_POST["add_les"];
         data_to_db(connect_mysqli(), "UPDATE time_info set num_less_per_day = ".($my_timetable->get_num_less()+1)." , times = '".$times."'");
+        echo "<script>location.reload()</script>";
         echo "<script>document.getElementById('logs').innerHTML = 'Hodina přidana!'</script>";
     }
     if($_POST["del_les"]!=null)
     {
         $times ="";
         $tmp=true;
+        $i=0;
         foreach ($my_timetable->get_time_less() as $cell)
         {
+            $i=$i+1;
+            if ($my_timetable->get_num_less()-1 == $i);
             if ($tmp)
             {
                 $tmp = false;
@@ -235,6 +238,7 @@ if (isset($_POST["add_les"]))
             else $times = $times."-".$cell;
         }
         if ($my_timetable->get_num_less() > 0)data_to_db(connect_mysqli(), "UPDATE time_info set num_less_per_day = ".($my_timetable->get_num_less()-1)." , times = '".$times."'");
+        echo "<script>location.reload()</script>";
         echo "<script>document.getElementById('logs').innerHTML = 'Hodina odebrana!'</script>";
     }
 }

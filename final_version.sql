@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS drive_sch_db.sides (
   street VARCHAR(45) NULL,
   GPS_coordinate VARCHAR(45) NULL UNIQUE,
   more_info VARCHAR(45) NULL,
-  visibility ENUM('true', 'false'),
+  visibility ENUM('true', 'false') default 'true',
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS drive_sch_db.course (
 id INT NOT NULL AUTO_INCREMENT,
 vehicle_type VARCHAR(45) NULL UNIQUE,
 num_of_less INT NULL,
-visibility ENUM('true', 'false'),
+visibility ENUM('true', 'false') default 'true',
 PRIMARY KEY (id))
 ENGINE = InnoDB;
 
@@ -105,6 +105,21 @@ CREATE TABLE IF NOT EXISTS drive_sch_db.timetable (
   FOREIGN KEY (sides_id) REFERENCES sides(id))
 ENGINE = InnoDB;
 
+CREATE TABLE IF NOT EXISTS drive_sch_db.time_info (
+	-- les_duration ENUM('45', '90') NULL,
+    num_less_per_day INT NULL,
+    times TEXT NULL,
+    vis_weeks int null,
+    time_take int null
+) ENGINE = InnoDB;
+
+insert into time_info (num_less_per_day, times, vis_weeks, time_take) values (5, "00:00-01:00-02:00-03:00-04:00", 3, 0);
+
+insert into lector(email, password) values('lector@lector', md5('1234'));
+insert into student(email, password) values('student@student', md5('1234'));
+insert into course(vehicle_type, num_of_less) values('Auto', 13);
+insert into sides(town, street) values('Brno', 'Hlavni');
+insert into student_course_lec(lector_id, student_id, course_id) values(1, 1, 1);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

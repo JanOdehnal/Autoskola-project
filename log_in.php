@@ -26,13 +26,13 @@
             <label for="email_l">*Email:</label>
             <input id="email_l" type="email" name="email_l" required/>
             <br>
-            <label for="password_l">*Zadej heslo:"</label>
+            <label for="password_l">*Zadej heslo:</label>
             <input id="password_l" type="password" name="password_l" required/>
             <br>
             <label for="password_ag">*Zadej heslo znovu:</label>
             <input id="password_ag" type="password" name="password_ag" required/>
             <br>
-            <label for="password_ver">*Zadej evěřovací heslo:</label>
+            <label for="password_ver">*Zadej ověřovací heslo:</label>
             <input id="password_ver" type="password" name="password_ver" required/>
             <br>        
             <input type="submit" value="Registrace">
@@ -56,10 +56,6 @@ if (isset($_POST["email_s"]))
     }
     if ($row!=null)
     {
-        
-        /*$string = "Hello, world!";
-        $hash = hash("sha256", $string);*/
-
         if (md5($_POST["password_s"]) == $row["password"])
         {
             $_SESSION["info"] = $row;

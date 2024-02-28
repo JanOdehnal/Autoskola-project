@@ -1,6 +1,6 @@
 <html>
     <div id="add_veh" class="jump_div">
-        <h1>přidej kurz</h1>
+        <h1>Přidej kurz</h1>
         <form method="post">
             <label for="vehic_name">*Název:</label>
             <input id="vehic_name" type="text" name='vehic_name' required/>

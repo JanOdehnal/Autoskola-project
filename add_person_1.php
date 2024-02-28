@@ -14,7 +14,7 @@ require_once "connect_mysqli.php";
     ?>
         <h1>Přidat osobu</h1>
         <form method="POST">
-            *Pyice:<br>
+            *Pozice:<br>
             <input type="radio" id="student" name="posicion" value="student" required>
             <label for="student">Student</label>
             <input type="radio" id="lector" name="posicion" value="lector">

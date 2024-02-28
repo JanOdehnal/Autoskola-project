@@ -55,7 +55,7 @@ select x.*, y.email from timetable x left join student y on x.student_id = y.id 
 
 SELECT count(student_id) from timetable where lesson_date = '2024-03-02' and student_id =6;
 SELECT * from timetable where student_id = 6;
-alter table student drop column lesson_num;
+alter table lector drop column lesson_num;
 alter table student add column lesson_num_h int null;
 alter table timetable add column teacher_id int null;
 alter table timetable drop column lector_id;
@@ -71,6 +71,7 @@ CREATE TABLE IF NOT EXISTS drive_sch_db.time_info (
     vis_weeks int null,
     time_take int null
 ) ENGINE = InnoDB;
+select * from time_info;
 drop table time_info;
 insert into time_info (num_less_per_day, times, vis_weeks, time_take) values (5, "00:00-01:00-02:00-03:00-04:00", 3, 0);
-select * from time_info;
+drop database drive_sch_db;

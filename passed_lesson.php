@@ -91,9 +91,11 @@
         document.getElementById("start_date_f").innerHTML =  date;
         let d = String(date);
         d=d.split(".");
+        console.log(pos_hour);
+        console.log(lector+"_0_"+pos_hour);
         document.getElementById("start_date_f_").value =  d[2]+"-"+d[1]+"-"+d[0];
-        document.getElementById("start_hour_f").innerHTML =  document.getElementById(lector+"_0_"+pos_hour).innerHTML;
         document.getElementById("start_hour_f_").value =  pos_hour;
+        document.getElementById("start_hour_f").innerHTML =  document.getElementById(lector+"_0_"+pos_hour).innerHTML;
         document.getElementById("meet_s").innerHTML = "side: "+side;
         if(veh_type!=null)document.getElementById("type_car").innerHTML="Vozidlo: "+veh_type;
         if(name!=null)document.getElementById("stu_name").innerHTML="Jméno: "+name;

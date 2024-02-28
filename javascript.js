@@ -1,3 +1,8 @@
+if (window.history.replaceState)
+{
+    window.history.replaceState(null, null, window.location.href)
+}
+
 function change_color()
 {
     document.getElementById("jum_d").style.background="red";
