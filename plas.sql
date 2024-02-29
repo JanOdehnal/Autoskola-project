@@ -5,7 +5,7 @@ delete from lector where id=2;
 delete from course where id=4;
 delete from student where id=7;
 delete from sides where id=2;
-delete from timetable where stident_id < 100;
+delete from timetable where student_id < 100;
 delete from student_course_lec where student_id = 7;
 -- alter table course modify vehicle_type varchar(45) null unique;
 alter table student add column verify_pass int null;
@@ -75,3 +75,5 @@ CREATE TABLE IF NOT EXISTS drive_sch_db.time_info (
 drop table time_info;
 insert into time_info (num_less_per_day, times, vis_weeks, time_take) values (5, "00:00-01:00-02:00-03:00-04:00", 3, 0);
 select * from time_info;
+SELECT count(student_id) from student_course_lec where student_id= 6;
+drop database drive_sch_db;

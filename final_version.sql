@@ -115,8 +115,8 @@ CREATE TABLE IF NOT EXISTS drive_sch_db.time_info (
 
 insert into time_info (num_less_per_day, times, vis_weeks, time_take) values (5, "07:00-9:00-10:00-12:00-15:00", 3, 0);
 
-insert into lector(email, password) values('lector@lector', md5('1234'));
-insert into student(email, password) values('student@student', md5('1234'));
+insert into lector(email, password, possicion) values('lector@lector', md5('1234'), 'admin');
+insert into student(email) values('student@student');
 insert into course(vehicle_type, num_of_less) values('Auto', 13);
 insert into sides(town, street) values('Brno', 'Hlavni');
 insert into student_course_lec(lector_id, student_id, course_id) values(1, 1, 1);

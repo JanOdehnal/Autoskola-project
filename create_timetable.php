@@ -96,7 +96,7 @@ function create_table($lector_row, $my_timetable)
                             if ($_SESSION["info"]["possicion"]=="admin") $table=$table."<td onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 4)\" class='taken'>Autoškola</td>";
                             else if ($_SESSION["info"]["possicion"]=="lector") $table=$table."<td onclick=\"check_lesson(" .$j. ", '" .date("d.m.Y", $tmp). "', ".$lector_row["id"].",'".$row_t["town"].", ".$row_t["street"].", ".$row_t["GPS_coordinate"]."', 1)\" class='taken'>Autoškola info</td>";
                         }
-                        else $table=$table."<td class='taken'>driving school</td>";
+                        else $table=$table."<td class='taken'>Autoškola</td>";
                     }
                     else if (isset($_SESSION["possicion"]))
                     {
