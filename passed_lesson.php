@@ -13,7 +13,7 @@
         <div id="choose_side" style="visibility:hidden"><!--for student-->
             <input type="hidden" name="change" id="change" value="">
             <label for="meet_side">Místo nástupu:</label>
-            <select name="meet_side" id="meet_side" require>  
+            <select name="meet_side" id="meet_side">  
 <?php
     $query = "SELECT id, town, street, GPS_coordinate, more_info, visibility from sides";
     if ($stmt = $con->prepare($query)) {
@@ -95,7 +95,7 @@
         document.getElementById("start_date_f_").value =  d[2]+"-"+d[1]+"-"+d[0];
         document.getElementById("start_hour_f_").value =  pos_hour;
         document.getElementById("start_hour_f").innerHTML =  document.getElementById(lector+"_0_"+pos_hour).innerHTML;
-        document.getElementById("meet_s").innerHTML = "side: "+side;
+        document.getElementById("meet_s").innerHTML = "Místo: "+side;
         if(veh_type!=null)document.getElementById("type_car").innerHTML="Vozidlo: "+veh_type;
         if(name!=null)document.getElementById("stu_name").innerHTML="Jméno: "+name;
     }
