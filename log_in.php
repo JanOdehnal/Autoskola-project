@@ -58,7 +58,12 @@ if (isset($_POST["email_s"]))
     {
         if (md5($_POST["password_s"]) == $row["password"])
         {
-            $_SESSION["info"] = $row;
+            
+            if ($_SESSION["possicion"] = "lector" && $row["id"] == 1 && array_values(mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT count(id) from lector")))[0]==1)
+            {
+                session_unset();
+            }
+            else $_SESSION["info"] = $row;
         }
         else
         {

@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS drive_sch_db.time_info (
     time_take int null
 ) ENGINE = InnoDB;
 
-insert into time_info (num_less_per_day, times, vis_weeks, time_take) values (5, "00:00-01:00-02:00-03:00-04:00", 3, 0);
+insert into time_info (num_less_per_day, times, vis_weeks, time_take) values (5, "07:00-9:00-10:00-12:00-15:00", 3, 0);
 
 insert into lector(email, password) values('lector@lector', md5('1234'));
 insert into student(email, password) values('student@student', md5('1234'));
