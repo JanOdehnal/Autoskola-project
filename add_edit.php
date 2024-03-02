@@ -22,10 +22,9 @@
 </html>
 
 <?php
-if (isset($_POST["num_h"]))
+if (isset($_POST["num_h"]) && isset($_POST["pos_contin_"]))
 {
-    if ($_POST["pos_contin_p"] == "student" && $_POST["num_h"]==0);
-    else if ($row=mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT * from ".$_POST["pos_contin_p"]." where id = ".$_POST["pos_contin_i"])))
+    if ($row=mysqli_fetch_assoc(mysqli_query(connect_mysqli(), "SELECT * from '".$_POST["pos_contin_p"]."' where id = ".$_POST["pos_contin_i"])) && $_POST["pos_contin_p"] == "student" && $_POST["num_h"]<=0)
     {
         data_to_db(connect_mysqli(), "UPDATE student SET lesson_num_h = ".($row["lesson_num_h"]+$_POST["num_h"])." where id = ".$_POST["pos_contin_i"]);
         echo "<script>document.getElementById('logs').innerHTML = 'Přidal jsi ".$_POST["num_h"]." hodin ".$row["name"]." ".$row["surname"]."!'</script>";

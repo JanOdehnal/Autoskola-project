@@ -11,7 +11,7 @@
             <label for="email_s">*Email:</label>
             <input id="email_s" type="email" name="email_s" required/>
             <br>
-            <label for="password_s">*Password:</label>
+            <label for="password_s">*Heslo:</label>
             <input id="password_s" type="password" name="password_s" required/>
             <br>
             <input type="submit" value="Přihlásit se" >
@@ -117,7 +117,7 @@ if (isset($_POST["email_l"]))//hash
             {
                 $_SESSION["possicion"] = "lector";
                 $_SESSION["info"] = $row;
-                data_to_db($con, "UPDATE lector SET password = '" .$_POST["password_l"]. "' where email = '" .$_POST["email_l"]. "'");
+                data_to_db($con, "UPDATE lector SET password = '" .md5($_POST["password_l"]). "' where email = '" .$_POST["email_l"]. "'");
             }
             else
             {

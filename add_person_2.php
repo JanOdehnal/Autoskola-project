@@ -81,12 +81,12 @@ if (isset($_POST["reg"]))
     }
     else
     {
-        if ($_POST["if_activ"]==NULL)
+        if (isset($_POST["if_activ"]) && $_POST["if_activ"]==NULL)
         {
             echo "<script>document.getElementById('logs').innerHTML = 'Nevyplnil jsi jestli bude učit!'</script>";
             return 0;
         }
-        else
+        else if (isset($_POST["if_activ"]))
         {
             //hash!!!!
             $password = rand(100000,999999);

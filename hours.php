@@ -23,7 +23,7 @@ while ($row = mysqli_fetch_assoc($sql_stat))
     }
     $les_tab = $les_tab."</tr>";
 }
-$les_tab = $les_tab."</table>number of all hours : ".$count."<br><button onclick=\"change_visibility('hours')\">Schovat!</button></div>";
+$les_tab = $les_tab."</table>Počet jízd: ".$count."<br><button onclick=\"change_visibility('hours')\">Schovat</button></div>";
 echo $les_tab;
 
 ?>

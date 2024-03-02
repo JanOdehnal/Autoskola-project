@@ -64,13 +64,13 @@ function continue_(inf)
   {
     document.getElementById("add_delete").style.visibility="visible";
     document.getElementById("add_hours").style.visibility="visible";
-    document.getElementById("del_add").innerHTML="Přidat osobu";
+    document.getElementById("del_add").innerHTML="Přidat hodinu";
   }
   if (inf == 2)
   {
     document.getElementById("add_delete").style.visibility="visible";
     document.getElementById("delete_pers").style.visibility="visible";
-    document.getElementById("del_add").innerHTML="Smazat osobu";
+    document.getElementById("del_add").innerHTML="Smazat studenta";
   }
 }
 
